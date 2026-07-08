@@ -129,6 +129,10 @@ export const projects: Project[] = [
     ],
     featured: true,
     gradient: 'linear-gradient(135deg, #4c1d95 0%, #db2777 100%)',
+    screenshots: [
+      '/screenshots/velvet-flutter-salon-hub/status-board.png',
+      '/screenshots/velvet-flutter-salon-hub/new-update-posted.png',
+    ],
   },
   {
     id: 'iron-and-vine',
