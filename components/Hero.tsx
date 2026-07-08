@@ -1,3 +1,5 @@
+import { projects } from '@/data/projects';
+
 const SPECIALTIES = [
   {
     label: 'Workflow Automation',
@@ -72,7 +74,7 @@ export function Hero() {
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
           <div className="flex items-baseline gap-1.5">
-            <span className="text-lg font-bold text-navy-900">17+</span>
+            <span className="text-lg font-bold text-navy-900">{projects.length}+</span>
             <span className="text-navy-500">Projects</span>
           </div>
           <div aria-hidden="true" className="h-4 w-px bg-navy-200" />

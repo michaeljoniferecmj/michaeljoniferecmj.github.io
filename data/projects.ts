@@ -170,6 +170,7 @@ export const projects: Project[] = [
       'Handles after-hours coverage without requiring on-call staff to monitor inboxes',
     ],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #dc2626 100%)',
+    screenshots: ['/screenshots/midnight-molar/workflow-canvas.png'],
   },
   {
     id: 'obsidian-ridge',
@@ -341,15 +342,16 @@ export const projects: Project[] = [
     title: 'Velvet Crema Lab',
     tagline: 'Subscription Sync',
     category: 'Subscription Management',
-    stack: ['n8n', 'Google Sheets'],
+    stack: ['n8n', 'Google Sheets', 'Gmail', 'Airtable'],
     description:
-      'Subscription management workflow that keeps subscriber records synchronized between intake forms and the CRM sheet, with automated status tracking.',
+      'Subscription management workflow that keeps subscriber records synchronized between intake forms and the CRM sheet, with automated status tracking. Normalizes new-subscriber data, flags missing addresses via Gmail alerts, and routes premium vs. basic tiers to separate Airtable fulfillment tables.',
     highlights: [
       'Intake form submissions automatically synced to subscriber CRM sheet',
       'Status tracking updated per subscriber action',
       'Google Sheets as the source of truth for subscriber state',
     ],
     gradient: 'linear-gradient(135deg, #44403c 0%, #b45309 100%)',
+    screenshots: ['/screenshots/velvet-crema-lab/workflow-canvas.png'],
   },
   {
     id: 'glacier-and-gorse',
