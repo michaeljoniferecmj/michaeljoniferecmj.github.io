@@ -63,11 +63,30 @@ const CATEGORIES: SkillCategory[] = [
       </svg>
     ),
     items: [
-      'PHP & SQLite',
-      'Next.js / React',
-      'REST API Integration',
+      'Next.js / React / TypeScript',
+      'Node.js (Fastify) & REST APIs',
+      'PostgreSQL / Prisma / Supabase',
+      'PHP & WordPress / WooCommerce',
       'CSS / Tailwind CSS',
-      'Vercel Deployment',
+      'Vercel / Railway Deployment',
+    ],
+  },
+  {
+    title: 'SEO & GEO',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-5 w-5">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.35-4.35" />
+        <path d="M11 7.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z" />
+      </svg>
+    ),
+    items: [
+      'Generative Engine Optimization (GEO)',
+      'AI Overviews & LLM Citations',
+      'Technical & On-Page SEO',
+      'Schema Markup / Structured Data',
+      'Core Web Vitals Optimization',
+      'WordPress SEO (Yoast / RankMath)',
     ],
   },
 ];
@@ -107,11 +126,11 @@ export function Skills() {
           Tech Stack &amp; Tools
         </h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-navy-600">
-          A toolkit built around automation, integrations, AI, and lightweight
-          full-stack delivery — chosen for reliability over novelty.
+          A toolkit built around automation, integrations, AI, SEO/GEO, and
+          lightweight full-stack delivery — chosen for reliability over novelty.
         </p>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {CATEGORIES.map((category) => (
             <article
               key={category.title}

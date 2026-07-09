@@ -34,6 +34,25 @@ const SPECIALTIES = [
       </svg>
     ),
   },
+  {
+    label: 'Web Development',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+  },
+  {
+    label: 'SEO & GEO',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.35-4.35" />
+        <path d="M11 7.5l.9 1.9 1.9.9-1.9.9-.9 1.9-.9-1.9-1.9-.9 1.9-.9z" />
+      </svg>
+    ),
+  },
 ];
 
 export function Hero() {
@@ -50,7 +69,7 @@ export function Hero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-navy-700">
-            Available for Automation &amp; Workflow Projects
+            Available for Automation &amp; Web Development Projects
           </span>
         </div>
 
@@ -59,17 +78,18 @@ export function Hero() {
           className="mt-8 text-balance text-[40px] font-extrabold leading-[1.05] tracking-tight text-navy-900 sm:text-[56px] lg:text-[64px]"
         >
           Building{' '}
-          <span className="accent-underline text-accent">smart</span>, scalable
-          automation workflows powered by{' '}
+          <span className="accent-underline text-accent">smart</span> automation
+          workflows and web applications powered by{' '}
           <span className="soft-underline">n8n</span>,{' '}
-          <span className="soft-underline">Google Workspace</span>, and{' '}
+          <span className="soft-underline">Next.js</span>, and{' '}
           <span className="soft-underline">AI</span>.
         </h1>
 
         <p className="mt-6 max-w-2xl text-balance text-base leading-relaxed text-navy-600 sm:text-[17px]">
-          Automation specialist designing end-to-end n8n workflows, lead
-          qualification pipelines, and AI-powered tools for small and medium
-          businesses.
+          Automation specialist and full-stack web developer — designing
+          end-to-end n8n workflows, AI-powered tools, and production websites
+          and SaaS products, plus SEO and Generative Engine Optimization, for
+          small and medium businesses.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">

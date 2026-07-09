@@ -65,8 +65,12 @@ test.describe('Home page', () => {
 
   test('deep-linking to each section anchor scrolls it into view', async ({ page }) => {
     for (const id of ['skills', 'projects', 'contact']) {
+      // Fresh document per anchor: chained same-document hash navigations
+      // race the previous smooth-scroll animation, which is not the
+      // deep-linking behavior this test covers.
+      await page.goto('about:blank');
       await page.goto(`/#${id}`);
-      await expect(page.locator(`section#${id}`)).toBeInViewport();
+      await expect(page.locator(`section#${id}`)).toBeInViewport({ timeout: 10_000 });
     }
   });
 

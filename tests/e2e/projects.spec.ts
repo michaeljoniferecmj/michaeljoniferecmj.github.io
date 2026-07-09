@@ -48,7 +48,7 @@ test.describe('Projects section', () => {
     await expect(dialog).toHaveAttribute('aria-label', `${project.title} details`);
     await expect(dialog.getByRole('heading', { level: 2, name: project.title })).toBeVisible();
     await expect(dialog.getByText(project.description)).toBeVisible();
-    await expect(dialog.getByText(project.tagline)).toBeVisible();
+    await expect(dialog.getByText(project.tagline, { exact: true })).toBeVisible();
 
     // Close via the close button.
     await dialog.getByRole('button', { name: 'Close' }).click();

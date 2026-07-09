@@ -60,9 +60,10 @@ export function Projects() {
           Projects
         </h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-navy-600">
-          A collection of automation systems, business workflows, and full-stack
+          A collection of automation systems, client websites, and full-stack
           applications built for real businesses — from emergency triage and
-          procurement pipelines to AI-powered staff assistants.
+          procurement pipelines to production SaaS platforms and AI-powered
+          staff assistants.
         </p>
 
         <div className="mt-12 flex flex-col gap-6">

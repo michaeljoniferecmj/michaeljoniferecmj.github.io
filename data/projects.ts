@@ -13,6 +13,37 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'ask-trevor',
+    title: 'Ask Trevor',
+    tagline: 'AI Property-Development Operating System',
+    category: 'AI Platform · Multi-Agent Orchestration',
+    stack: [
+      'LangGraph',
+      'Claude API (claude-sonnet-4)',
+      'Firestore',
+      'Google Cloud Storage',
+      'Vertex AI Vector Search',
+      'Pub/Sub',
+      'ArcGIS',
+      'LangSmith',
+      'Python',
+    ],
+    description:
+      'AI property-development operating system for Australia, guiding homeowners, owner-builders, architects, engineers, certifiers, surveyors, town planners, builders, and trades across every stage of a development — from planning intelligence through approvals, construction coordination, and compliance. A network of specialised AI agents works behind a single user-facing persona, "Trevor", connected through a common orchestration and safety layer.',
+    highlights: [
+      'Multi-agent architecture behind one persona: specialised agents coordinated by an internal orchestration agent ("Astro"), with Trevor as the only user-facing intelligence',
+      'Deterministic regulatory path — the Planning Rules Agent runs no LLM in rules determinations, so identical inputs always yield identical outputs',
+      'Council knowledge answers are advisory and source-cited, never presented as determinations',
+      'ArcGIS spatial resolution turns an address into zone, lot, overlays, and planning controls',
+      'Phase 1 MVP live: session loader, LLM node, address resolver, Firestore chat sessions, and an end-to-end session + ArcGIS flow',
+      'Planning Rules Agent live for two NSW councils — Kempsey and Port Macquarie-Hastings',
+      'LangSmith tracing across all orchestration nodes for full observability',
+    ],
+    featured: true,
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #0891b2 100%)',
+    screenshots: ['/screenshots/ask-trevor/01-trevor-ai-command-centre.png'],
+  },
+  {
     id: 'vellum-and-vine',
     title: 'Vellum & Vine',
     tagline: 'Lead Qualification & Brief Generator',
@@ -28,7 +59,6 @@ export const projects: Project[] = [
       'Slack alert to team lead with a direct link to the generated brief',
       'Replaced ~4 hours/week of manual triage for the agency team',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #0f172a 0%, #4338ca 100%)',
   },
   {
@@ -46,7 +76,6 @@ export const projects: Project[] = [
       'Dead-letter path with Discord alerts ensures no lead is ever lost',
       'Branded confirmation email sent to customer within seconds of submission',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #0f172a 0%, #0d9488 100%)',
   },
   {
@@ -64,7 +93,6 @@ export const projects: Project[] = [
       'Zero onboarding required — staff interact via a simple chat interface',
       'Knowledge base updated via a CSV file, no code changes needed',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #1e1b4b 0%, #7c3aed 100%)',
     screenshots: [
       '/screenshots/root-and-rind/workflow-success.jpg',
@@ -87,7 +115,6 @@ export const projects: Project[] = [
       'Real-time email notifications to requestor with GO/NO-GO decision',
       'Eliminates phone tag and manual email chains during critical downtime events',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #0f172a 0%, #b45309 100%)',
   },
   {
@@ -107,7 +134,6 @@ export const projects: Project[] = [
       'Gmail draft queued for sales rep review with pre-filled personalized quote',
       'Includes 5 ready-to-run test cases with curl script',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #14532d 0%, #166534 100%)',
   },
   {
@@ -127,11 +153,129 @@ export const projects: Project[] = [
       'All output escaped via a single e() helper — auditable XSS protection',
       'Reverse-chronological feed always showing the 10 most recent status updates',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #4c1d95 0%, #db2777 100%)',
     screenshots: [
       '/screenshots/velvet-flutter-salon-hub/status-board.png',
       '/screenshots/velvet-flutter-salon-hub/new-update-posted.png',
+    ],
+  },
+  {
+    id: 'houseplan-group',
+    title: 'HousePlan Group',
+    tagline: 'Digital House Plan Marketplace',
+    category: 'Web Development · Client Website',
+    stack: ['WordPress', 'WooCommerce', 'Elementor', 'Houzez Theme', 'PHP'],
+    description:
+      'Live production website for an Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1976). Sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
+    highlights: [
+      'Deployed and serving real customers at houseplangroup.com.au',
+      'WooCommerce digital-download storefront — tiered plan sets from $90 preliminary PDFs to ~$980 construction sets with editable Revit/CAD files',
+      'Faceted plan search: bedrooms, bathrooms, storeys, floor size, plus lot-specific filters (width, depth, shape, slope)',
+      'Browse-by-style taxonomy with 10+ architectural styles (Hamptons, Coastal, Farmhouse, Queenslander…), each with its own SEO landing page',
+      'Plan detail pages with 3D render galleries, spec tables, and plan-set comparison',
+      'Educational content hub: How It Works, What You Get, DA vs CDC approval-pathway guides, and FAQ',
+    ],
+    featured: true,
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #059669 100%)',
+    screenshots: [
+      '/screenshots/houseplan-group/01-home-hero.png',
+      '/screenshots/houseplan-group/02-plan-detail-seaview.png',
+      '/screenshots/houseplan-group/03-home-styles-section.png',
+      '/screenshots/houseplan-group/04-how-it-works.png',
+      '/screenshots/houseplan-group/05-what-you-get.png',
+    ],
+  },
+  {
+    id: 'reviewpilot',
+    title: 'ReviewPilot',
+    tagline: 'AI-Powered Review Management Platform',
+    category: 'SaaS Product · Full-Stack',
+    stack: ['Next.js 14', 'TypeScript', 'Supabase', 'PostgreSQL', 'Stripe', 'Claude API', 'Tailwind CSS'],
+    description:
+      'Multi-tenant SaaS that helps local service businesses generate, monitor, and respond to online reviews from a single dashboard. Aggregates Google, Yelp, and Facebook reviews into one inbox, sends automated SMS/email review requests, drafts on-brand AI replies with a human approval queue, and handles subscription billing end-to-end. Nine modules built and shipped with 785 passing tests and zero TypeScript errors.',
+    highlights: [
+      '9 of 9 planned modules complete — auth, aggregation, request engine, dashboard, AI responses, reporting, billing, onboarding/marketing site, and admin tools',
+      '785 automated tests passing across the platform, 0 TypeScript errors',
+      'Multi-tenant architecture with PostgreSQL row-level security: organizations, locations, and role-based membership (owner/manager/staff)',
+      'Review aggregation from Google Business Profile, Yelp Fusion, and Meta Graph APIs into a unified, deduplicated inbox',
+      'SMS/email review request campaigns via Twilio and SendGrid with multi-touch drip sequences and opt-out handling',
+      'Claude-powered response drafting with tone profiles, auto-reply rules, sentiment classification, and a human approval queue for sub-4-star reviews',
+      'Stripe subscription billing with webhook idempotency log, plus an internal admin panel with MRR dashboard and per-org feature flags',
+    ],
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #2563eb 100%)',
+    screenshots: [
+      '/screenshots/reviewpilot/landing.png',
+      '/screenshots/reviewpilot/features.png',
+      '/screenshots/reviewpilot/pricing.png',
+    ],
+  },
+  {
+    id: 'heides-cozy-spa',
+    title: "Heide's Cozy Spa",
+    tagline: 'Website Pitch Package & Working Demo',
+    category: 'Web Development · Client Pitch',
+    stack: ['HTML/CSS', 'JavaScript', 'UX Wireframes', 'Design Tokens', 'WordPress (proposed)'],
+    description:
+      "Full pre-sale pitch package for a neighborhood spa in Minglanilla, Cebu that currently exists only on Facebook: discovery brief, mobile-first UX sitemap and wireframes, a UI style tile with every hex value traced to the client's real brand assets, a working six-page demo site, and a client-facing proposal deck.",
+    highlights: [
+      "Discovery brief grounded entirely in the client's own materials — a photographed 14-item services poster, logo, and interior photos; nothing invented",
+      'Working 6-page demo site: Home, Services & Pricing, Book an Appointment, About, Location & Hours, Contact',
+      'Mobile-web-first IA built for "massage near me" searches — tap-to-call primary CTA on every page, booking form as the after-hours channel',
+      "Full menu on one page, grouped exactly like the client's printed poster (Massages / Scrubs & Facials / Combos)",
+      'UI style tile: sage-green, gold, and cream palette with every token traced to a specific client asset',
+      'Proposal recommends WordPress + Google Business Profile, with real-time booking and payments deliberately deferred from v1',
+    ],
+    gradient: 'linear-gradient(135deg, #1c3527 0%, #b7791f 100%)',
+    screenshots: [
+      '/screenshots/heides-cozy-spa/01-home-hero.png',
+      '/screenshots/heides-cozy-spa/02-services-pricing.png',
+      '/screenshots/heides-cozy-spa/03-booking.png',
+    ],
+  },
+  {
+    id: 'vision-sportswear-ph',
+    title: 'Vision Sportswear PH',
+    tagline: 'Custom Sportswear Demo Site & Pitch',
+    category: 'Web Development · Client Pitch',
+    stack: ['HTML/CSS', 'JavaScript', 'GSAP', 'Swiper', 'Alpine.js', 'WordPress (proposed)'],
+    description:
+      'Pitch package and zero-build demo site for a Philippine custom sublimation sportswear printer whose entire sales pipeline lives in Facebook Messenger DMs. Turns "DM us for pricing" into a structured path: gallery-first homepage, dual-axis catalog, and a four-step quote request form — with Messenger and WhatsApp kept front and center alongside it.',
+    highlights: [
+      'Single-page demo built on a reusable zero-build kit: vanilla JS over vendored GSAP, ScrollTrigger, Lenis, Swiper, and Alpine — no bundler required',
+      'Dual-axis catalog IA: browse by product (jerseys, shorts, polos) and by buyer (basketball teams, corporate sponsors, civic/fraternal clubs) simultaneously',
+      "Four-step quote form — what they need → sizing → logo/design upload → contact and budget — designed so buyers don't need every detail figured out",
+      '"Powered by Epson SureColor" trust badge placed at three deliberate high-trust moments, including next to the quote CTA',
+      'Gold reserved exclusively for the Request a Quote button — impossible to miss when it counts',
+      'Process transparency baked into the homepage: Inquire → Design Proof → Approve → Production → Delivery',
+    ],
+    gradient: 'linear-gradient(135deg, #101c3f 0%, #c9a227 100%)',
+    screenshots: [
+      '/screenshots/vision-sportswear-ph/01-home-hero.png',
+      '/screenshots/vision-sportswear-ph/02-catalog.png',
+      '/screenshots/vision-sportswear-ph/03-process.png',
+      '/screenshots/vision-sportswear-ph/04-quote-form.png',
+    ],
+  },
+  {
+    id: 'shop-management',
+    title: 'Shop Management System',
+    tagline: 'Shopee Seller Backend & Web Admin',
+    category: 'Full-Stack Platform · Backend Engineering',
+    stack: ['TypeScript', 'Fastify', 'Next.js 14', 'PostgreSQL', 'Prisma', 'BullMQ', 'Redis', 'Gmail API', 'Turborepo'],
+    description:
+      "Cloud backend and web admin for a Shopee live seller in the Philippines, companion to an existing Android sticker-printing app. Continuously ingests Shopee order-notification emails from Gmail via OAuth2 watch/Pub/Sub push, normalizes customers and parcels into PostgreSQL, and exposes a fast lookup API so the seller can see a buyer's completed/returned/cancelled history live on stream.",
+    highlights: [
+      'Turborepo + pnpm monorepo: Fastify API, Next.js 14 admin, and BullMQ background workers sharing one Prisma schema',
+      'Gmail ingestion pipeline: watch/Pub/Sub push with a polling fallback, targeting sub-5-minute email-to-database latency',
+      'Parcel lifecycle tracking: shipping → delivered → completed / returned / cancelled, with an append-only event log',
+      'Hot-path customer lookup API for the Android app with a 500ms p95 latency target, secured by a rotatable hashed API key',
+      'Encrypted OAuth token storage and Pub/Sub webhook request verification',
+      'Deployed to Railway (Singapore) with PostgreSQL + Redis, migrations applied, and green CI (lint, typecheck, build)',
+    ],
+    gradient: 'linear-gradient(135deg, #1e1b4b 0%, #ea580c 100%)',
+    screenshots: [
+      '/screenshots/shop-management/02-gmail-connected.png',
+      '/screenshots/shop-management/03-gmail-disconnected.png',
     ],
   },
   {
@@ -315,7 +459,6 @@ export const projects: Project[] = [
       'Null-safe fallback for empty description fields — no crash on missing data',
       'Verified with live Google Sheet accessible to anyone with the link',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #422006 0%, #d97706 100%)',
     screenshots: [
       '/screenshots/spine-and-ledger/n8n-error-flow.png',
@@ -335,7 +478,6 @@ export const projects: Project[] = [
       'Order normalization and routing logic',
       'Google Sheets logging for order tracking and fulfillment',
     ],
-    featured: true,
     gradient: 'linear-gradient(135deg, #1c0a00 0%, #7c3200 100%)',
     screenshots: [
       '/screenshots/old-barrel-meadery/workflow-canvas.jpg',
