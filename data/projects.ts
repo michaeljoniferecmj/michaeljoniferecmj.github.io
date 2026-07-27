@@ -44,6 +44,7 @@ export const projects: Project[] = [
     featured: true,
     gradient: 'linear-gradient(135deg, #0f172a 0%, #0891b2 100%)',
     screenshots: ['/screenshots/ask-trevor/01-trevor-ai-command-centre.png'],
+    liveUrl: 'https://ask-trevor-report.vercel.app',
   },
   {
     id: 'vellum-and-vine',
@@ -79,6 +80,7 @@ export const projects: Project[] = [
       'Branded confirmation email sent to customer within seconds of submission',
     ],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #0d9488 100%)',
+    repoUrl: 'https://github.com/michaeljoniferecmj/resonance-stringed-instruments',
   },
   {
     id: 'root-and-rind-bistro',
@@ -126,6 +128,7 @@ export const projects: Project[] = [
       '/screenshots/irongrid-it/04-director-approval-email.jpg',
       '/screenshots/irongrid-it/05-sheets-audit-log.jpg',
     ],
+    repoUrl: 'https://github.com/michaeljoniferecmj/irongrid-hardware-procurement',
   },
   {
     id: 'terrafirm-machinery-academy',
@@ -194,6 +197,7 @@ export const projects: Project[] = [
       '/screenshots/houseplan-group/04-how-it-works.png',
       '/screenshots/houseplan-group/05-what-you-get.png',
     ],
+    liveUrl: 'https://houseplangroup.com.au',
   },
   {
     id: 'reviewpilot',
@@ -358,6 +362,30 @@ export const projects: Project[] = [
     ],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #dc2626 100%)',
     screenshots: ['/screenshots/midnight-molar/workflow-canvas.png'],
+    repoUrl: 'https://github.com/michaeljoniferecmj/midnight-molar-triage',
+  },
+  {
+    id: 'ginkgo-leaf-academy',
+    title: 'Ginkgo Leaf Academy',
+    tagline: 'Enrollment Inquiry Prioritization',
+    category: 'Lead Triage · Business Automation',
+    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Discord'],
+    description:
+      'Automated enrollment-inquiry triage for a Montessori school. Inquiries arrive via webhook, get tagged URGENT or STANDARD based on how soon the desired start date is, every lead is logged to Google Sheets, and urgent inquiries fire an immediate Discord alert to staff.',
+    highlights: [
+      'Priority computed from desired-start-date proximity — no manual inbox triage',
+      'Every lead logged to Google Sheets regardless of priority, so nothing slips',
+      'Discord alert fires only for URGENT leads — staff attention goes where it matters',
+      'Input sanitization with sensible fallbacks (missing phone → N/A) and submission timestamps',
+      'Fully documented workflow: architecture diagram, sample payloads, and setup guide in the repo',
+    ],
+    gradient: 'linear-gradient(135deg, #14532d 0%, #65a30d 100%)',
+    screenshots: [
+      '/screenshots/ginkgo-leaf-academy/canvas.jpg',
+      '/screenshots/ginkgo-leaf-academy/sheet.jpg',
+      '/screenshots/ginkgo-leaf-academy/discord.jpg',
+    ],
+    repoUrl: 'https://github.com/michaeljoniferecmj/ginkgo-leaf-academy',
   },
   {
     id: 'obsidian-ridge',
@@ -375,6 +403,7 @@ export const projects: Project[] = [
       'Protects guests and equipment by giving staff time to act before conditions worsen',
     ],
     gradient: 'linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%)',
+    repoUrl: 'https://github.com/michaeljoniferecmj/obsidian-ridge',
   },
   {
     id: 'peak-canvas-glamping',
