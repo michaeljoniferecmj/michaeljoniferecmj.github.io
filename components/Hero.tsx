@@ -63,6 +63,8 @@ export function Hero() {
       aria-labelledby="hero-heading"
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
+        <div className="flex flex-col-reverse items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
         <div className="inline-flex items-center gap-2 rounded-full border border-navy-200 bg-white px-3.5 py-1.5 shadow-sm">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
@@ -91,6 +93,17 @@ export function Hero() {
           and SaaS products, plus SEO and Generative Engine Optimization, for
           small and medium businesses.
         </p>
+          </div>
+
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/headshot.jpg"
+            alt="Michael Ervin Superable"
+            width={224}
+            height={224}
+            className="h-40 w-40 flex-shrink-0 rounded-2xl border border-navy-200 object-cover shadow-lg lg:h-56 lg:w-56"
+          />
+        </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
           <div className="flex items-baseline gap-1.5">

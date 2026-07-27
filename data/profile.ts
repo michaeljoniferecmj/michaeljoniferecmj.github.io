@@ -13,7 +13,7 @@ export const profile: Profile = {
   title: 'Automation & Full Stack Developer',
   email: 'michaeljonifer17@gmail.com',
   linkedin: 'https://linkedin.com/in/michael-superable',
-  github: 'https://github.com/michaelsuperable',
+  github: 'https://github.com/michaeljoniferecmj',
   summary:
     'Automation specialist designing end-to-end n8n workflows, lead qualification pipelines, and AI-powered tools for small and medium businesses.',
   skills: [

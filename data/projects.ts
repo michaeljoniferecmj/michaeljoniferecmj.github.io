@@ -9,6 +9,8 @@ export type Project = {
   featured?: boolean;
   gradient: string;
   screenshots?: string[];
+  liveUrl?: string;
+  repoUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -106,16 +108,24 @@ export const projects: Project[] = [
     category: 'Approval Workflow · Business Automation',
     stack: ['n8n', 'Webhooks', 'Gmail', 'Google Sheets'],
     description:
-      'Tiered procurement pipeline for industrial manufacturing sites where downtime costs thousands per minute. Auto-approves under $250, routes to manager for $250–$1K, director for over $1K. Includes 30-minute escalation timeouts and a Google Sheets audit log.',
+      'Tiered procurement pipeline for industrial manufacturing sites where downtime costs thousands per minute. Auto-approves under $250, routes to a project manager for $250–$1,500, and to a director above $1,500. Includes 30-minute escalation timeouts and a 16-column Google Sheets audit log.',
     highlights: [
       'Unique Request ID generated per request (REQ-XXXXXXXX-XXXX format)',
-      'Three approval tiers: auto-approve (<$250), manager ($250–$1K), director (>$1K)',
-      '30-minute escalation timeout — unanswered approvals auto-escalate up the chain',
-      'Full Google Sheets audit log: every request, decision, and timestamp recorded',
-      'Real-time email notifications to requestor with GO/NO-GO decision',
+      'Three approval tiers: auto-approve (<$250), PM ($250–$1,500), director (>$1,500)',
+      '30-minute escalation timeout — unanswered PM approvals auto-escalate to a secondary contact',
+      'One-click APPROVE / DENY buttons in the approval email — no login required',
+      'Full Google Sheets audit log: every request, decision, and timestamp recorded across 16 columns',
+      'Real-time email notification to the technician with the GO/NO-GO decision',
       'Eliminates phone tag and manual email chains during critical downtime events',
     ],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #b45309 100%)',
+    screenshots: [
+      '/screenshots/irongrid-it/01-workflow-canvas.jpg',
+      '/screenshots/irongrid-it/02-auto-approval-email.jpg',
+      '/screenshots/irongrid-it/03-pm-approval-email.jpg',
+      '/screenshots/irongrid-it/04-director-approval-email.jpg',
+      '/screenshots/irongrid-it/05-sheets-audit-log.jpg',
+    ],
   },
   {
     id: 'terrafirm-machinery-academy',
@@ -231,6 +241,8 @@ export const projects: Project[] = [
       '/screenshots/heides-cozy-spa/02-services-pricing.png',
       '/screenshots/heides-cozy-spa/03-booking.png',
     ],
+    liveUrl: 'https://heides-cozy-spa-demo.vercel.app',
+    repoUrl: 'https://github.com/michaeljoniferecmj/heides-cozy-spa-demo',
   },
   {
     id: 'vision-sportswear-ph',
@@ -255,6 +267,33 @@ export const projects: Project[] = [
       '/screenshots/vision-sportswear-ph/03-process.png',
       '/screenshots/vision-sportswear-ph/04-quote-form.png',
     ],
+    liveUrl: 'https://vision-sportswear-demo.vercel.app',
+    repoUrl: 'https://github.com/michaeljoniferecmj/vision-sportswear-demo',
+  },
+  {
+    id: 'hi-tech-automotive',
+    title: 'Hi-Tech Automotive',
+    tagline: 'Website Redesign Pitch & Working Demo',
+    category: 'Web Development · Client Pitch',
+    stack: ['HTML/CSS', 'JavaScript', 'GSAP', 'Design Tokens', 'WordPress (proposed)'],
+    description:
+      'Seven-page redesign concept for an auto repair shop in Silverlake, Los Angeles — replacing a dated stock-theme site with a zero-build demo whose entire visual language is derived from the shop itself: signage, storefront brick, and service photography. Built for a redesign pitch where the client can open the demo from a folder with no internet.',
+    highlights: [
+      'Seven pages including dedicated Hybrid & EV and Classics & Motorsport service lines the old site buried',
+      "Brand color corrected by evidence: four physical sources of the shop's brick red overruled the old website's stock-theme orange",
+      'Zero build step — vendored GSAP/ScrollTrigger as classic scripts so the demo runs from file:// in a client meeting',
+      'Self-hosted woff2 fonts, no CDN calls; WCAG contrast checked by computation',
+      'Three-tier design token system (tokens → base → kit) reusable across client pitches',
+      'prefers-reduced-motion respected throughout the GSAP scroll choreography',
+    ],
+    gradient: 'linear-gradient(135deg, #3f1d1d 0%, #b45309 100%)',
+    screenshots: [
+      '/screenshots/hi-tech-automotive/hi-tech-automotive-1920x1080.jpg',
+      '/screenshots/hi-tech-automotive/hi-tech-automotive-1200x900.jpg',
+      '/screenshots/hi-tech-automotive/hi-tech-automotive-mobile-1170x1992.jpg',
+    ],
+    liveUrl: 'https://hi-tech-automotive-demo.vercel.app',
+    repoUrl: 'https://github.com/michaeljoniferecmj/hi-tech-automotive-demo',
   },
   {
     id: 'shop-management',
