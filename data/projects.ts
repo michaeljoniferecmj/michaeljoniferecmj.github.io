@@ -55,9 +55,10 @@ export const SERVICE_LINES: ServiceLineDef[] = [
     label: 'SEO',
     sectionId: 'projects-seo',
     blurb:
-      'Organic-search architecture as the deliverable: crawlable taxonomies, faceted ' +
-      'catalogs, and landing pages built to rank. One case study — a live, revenue-generating ' +
-      'storefront that also appears under Websites.',
+      'Organic-search and AI-answer architecture as the deliverable: crawlable taxonomies, ' +
+      'entity and schema build-out, and redirect consolidation. Two live client sites — a ' +
+      'revenue-generating storefront that also appears under Websites, and a technical ' +
+      'remediation engagement for its parent company.',
   },
   {
     id: 'automation',
@@ -330,7 +331,7 @@ export const projects: Project[] = [
     category: 'SEO Architecture · Client Website',
     stack: ['WordPress', 'WooCommerce', 'Elementor', 'Houzez Theme', 'PHP'],
     description:
-      'Live production website for an Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1976). Sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
+      'Live production website for an Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1974). Sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
     highlights: [
       'Deployed and serving real customers at houseplangroup.com.au',
       'WooCommerce digital-download storefront — tiered plan sets from $90 preliminary PDFs to ~$980 construction sets with editable Revit/CAD files',
@@ -357,6 +358,35 @@ export const projects: Project[] = [
       '/screenshots/houseplan-group/06-mobile-home.png',
     ],
     liveUrl: 'https://houseplangroup.com.au',
+  },
+  {
+    id: 'dennis-partners-seo',
+    title: 'Dennis Partners',
+    tagline: 'Technical SEO & GEO Remediation',
+    category: 'SEO Architecture · Client Engagement',
+    stack: ['WordPress', 'Rank Math Pro', 'OptimizePress', 'Schema.org JSON-LD', 'MySQL', 'PHP'],
+    description:
+      'Technical SEO and GEO (Generative Engine Optimization) remediation for a NSW structural and civil engineering firm operating since 1974 — the parent company of HousePlan Group. A read-only audit of all 36 published URLs first, then a staged remediation: duplicate-title and missing-H1 fixes across the service-area pages, redirect consolidation of competing duplicate pages, a full entity and schema build-out, and removal of placeholder content left behind by a previous developer.',
+    highlights: [
+      'Audited all 36 published URLs individually — nothing sampled, nothing inferred — before changing anything',
+      '38 logged items: verified changes each carrying its own rollback command, plus three flagged findings held for client decision',
+      'Flagged the engagement’s highest-impact finding: a country-level firewall admitting Google and Bing but blocking US-based AI crawlers (GPTBot, ClaudeBot, PerplexityBot) — which would make the GEO work invisible to answer engines until the client lifts it',
+      'Fixed 12 pages that shared one identical title copied from an unrelated service page; added the missing H1 to all 11 service-area pages',
+      'Consolidated 23 URLs competing for 11 local queries into 11 single-hop 301s — the duplicates were orphaned, templated, and carried doorway-page risk; originals drafted rather than deleted',
+      'Removed a stale static robots.txt advertising a nine-month-old 5-URL sitemap that was shadowing the real 35-URL index',
+      'Entity and schema build-out: ProfessionalService + Organization with verified NAP and trading hours, FAQPage across 4 pages (20 Q&As), Service schema on all 8 service pages, and Person schema carrying each director’s professional registration — CPEng/NER for one, Building Practitioner registration for the other',
+      'Purged 1,150+ references to the previous developer’s dead domain across 52 database rows, plus a 29 MB error log left rotating since 2025',
+      'Removed fabricated demo content the site had been live with: invented testimonials, Lorem Ipsum FAQ answers, and a placeholder sales funnel',
+      'GEO audit against 8 target AI-answer queries; published indicative pricing as visible copy and in schema — the highest-value question gap identified',
+    ],
+    // Single line. Clears precedence criterion 3 on shipped search-facing
+    // artifacts (schema, redirect consolidation, sitemap correction, title/H1
+    // remediation). Deliberately NOT cross-listed to Websites: the deliverable
+    // is SEO remediation on an existing site, not a site build — cross-listing
+    // it would pad Websites, which FR-03 forbids.
+    lines: ['seo'],
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #475569 100%)',
+    liveUrl: 'https://dennispartners.com.au',
   },
   {
     id: 'reviewpilot',

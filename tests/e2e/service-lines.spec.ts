@@ -290,7 +290,7 @@ test.describe('Service lines', () => {
     expect(counts).toEqual({
       websites: 4,
       apps: 6,
-      seo: 1,
+      seo: 2,
       automation: 24,
       'ai-agents': 1,
     });
