@@ -325,14 +325,18 @@ export const projects: Project[] = [
   {
     id: 'houseplan-group',
     title: 'HousePlan Group',
-    tagline: 'Digital House Plan Marketplace',
+    tagline: 'SEO Recovery & Digital House Plan Marketplace',
     // Kicker rewritten at Gate A1 for prose/taxonomy coherence: this card is
     // 100% of what a visitor reads under the SEO heading.
     category: 'SEO Architecture · Client Website',
     stack: ['WordPress', 'WooCommerce', 'Elementor', 'Houzez Theme', 'PHP'],
     description:
-      'Live production website for an Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1974). Sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
+      'Ongoing technical SEO ownership of a live Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1974), taken over in May 2026 — site architecture, indexing recovery, schema, and Core Web Vitals, measured in Google Search Console throughout. The store sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
     highlights: [
+      'Indexed pages grew from a 47-page baseline at handover (May 2026) to 162 by late July — Google Search Console, all known pages',
+      'Fixed 55 broken URLs and remediated ~55 of 74 crawled-but-not-indexed pages through robots, canonical, and noindex corrections',
+      'Rebuilt the collection and taxonomy structure across 60+ pages; resolved duplicate canonicals and a custom router that was bypassing Yoast robots directives',
+      'Added LocalBusiness, FAQPage, and Product schema; Core Web Vitals work cut Total Blocking Time by 73% and stripped 136 KB of JavaScript from non-slider pages',
       'Deployed and serving real customers at houseplangroup.com.au',
       'WooCommerce digital-download storefront — tiered plan sets from $90 preliminary PDFs to ~$980 construction sets with editable Revit/CAD files',
       'Faceted plan search: bedrooms, bathrooms, storeys, floor size, plus lot-specific filters (width, depth, shape, slope)',
