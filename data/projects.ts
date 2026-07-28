@@ -66,7 +66,8 @@ export const SERVICE_LINES: ServiceLineDef[] = [
     sectionId: 'projects-automation',
     blurb:
       'Triggered workflow systems that remove manual steps — intake, routing, approvals, ' +
-      'alerting, and reporting. The deepest and most established line here, by a wide margin.',
+      'alerting, and reporting. The most established line here, and every workflow is shown ' +
+      'with its actual build rather than described.',
   },
   {
     id: 'ai-agents',
@@ -217,25 +218,6 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/michaeljoniferecmj/ginkgo-leaf-academy',
   },
   {
-    id: 'vellum-and-vine',
-    title: 'Vellum & Vine',
-    tagline: 'Lead Qualification & Brief Generator',
-    category: 'Lead Generation · CRM Automation',
-    stack: ['n8n', 'HubSpot', 'Google Docs', 'Slack', 'Gmail'],
-    description:
-      'Turns boutique agency lead intake into a fully qualified, CRM-synced, brief-ready pipeline in under 30 seconds. Applies a 6-rule scoring algorithm (0–50 score, S/A/B/C tiers), enforces a $3K budget gate, upserts HubSpot contacts, and generates a personalized Discovery Brief Google Doc from a 13-token template.',
-    highlights: [
-      '6-rule scoring algorithm producing S/A/B/C lead tiers',
-      '$3K monthly budget hard gate — disqualified leads get a courteous rejection email automatically',
-      'HubSpot contact and deal upserted with full scoring metadata',
-      'Personalized Discovery Brief Google Doc generated from a 13-token template',
-      'Slack alert to team lead with a direct link to the generated brief',
-      'Replaced ~4 hours/week of manual triage for the agency team',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #0f172a 0%, #4338ca 100%)',
-  },
-  {
     id: 'resonance-stringed-instruments',
     title: 'Resonance Stringed Instruments',
     tagline: 'Repair Triage System',
@@ -253,6 +235,12 @@ export const projects: Project[] = [
     lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #0d9488 100%)',
     repoUrl: 'https://github.com/michaeljoniferecmj/resonance-stringed-instruments',
+    screenshots: [
+      '/screenshots/resonance-stringed-instruments/01-canvas.jpg',
+      '/screenshots/resonance-stringed-instruments/02-canvas.jpg',
+      '/screenshots/resonance-stringed-instruments/03-canvas.jpg',
+      '/screenshots/resonance-stringed-instruments/04-canvas.jpg',
+    ],
   },
   {
     id: 'root-and-rind-bistro',
@@ -277,26 +265,6 @@ export const projects: Project[] = [
       '/screenshots/root-and-rind/workflow-success.jpg',
       '/screenshots/root-and-rind/workflow-false.jpg',
     ],
-  },
-  {
-    id: 'terrafirm-machinery-academy',
-    title: 'TerraFirm Machinery Academy',
-    tagline: 'Corporate Enrollment Engine',
-    category: 'Lead Scoring · Sales Automation',
-    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Discord', 'Gmail'],
-    description:
-      'Segments B2B vs. individual leads, generates tiered per-student quotes, scores priority (High/Medium/Low), logs 22-column lead data to Google Sheets, fires Discord alerts, and queues personalized Gmail drafts for sales reps.',
-    highlights: [
-      'B2B segmentation: filters personal email domains out of the corporate pipeline automatically',
-      'Tiered pricing engine: Tier 1/2/3 per-student quotes generated automatically',
-      'Priority scoring: High/Medium/Low based on student volume and enrollment urgency',
-      '22-column Google Sheets lead log captures full inquiry schema per submission',
-      'Discord alerts for High and Medium priority opportunities — sales team responds in minutes',
-      'Gmail draft queued for sales rep review with pre-filled personalized quote',
-      'Includes 5 ready-to-run test cases with curl script',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #14532d 0%, #166534 100%)',
   },
   {
     id: 'velvet-flutter-salon-hub',
@@ -566,122 +534,12 @@ export const projects: Project[] = [
     lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%)',
     repoUrl: 'https://github.com/michaeljoniferecmj/obsidian-ridge',
-  },
-  {
-    id: 'peak-canvas-glamping',
-    title: 'Peak Canvas Glamping',
-    tagline: 'High-Wind Safety Alert System',
-    category: 'Real-Time Alert System',
-    stack: ['n8n', 'OpenWeatherMap API', 'Slack', 'Cron'],
-    description:
-      'Polls OpenWeatherMap every 4 hours and pushes Slack alerts when sustained wind speed or gusts exceed the safety threshold for canvas yurt structures at Big Sur, CA. Silent exit when conditions are safe — zero alert fatigue.',
-    highlights: [
-      'Cron-scheduled every 4 hours — fully autonomous, no manual checks needed',
-      '25 mph wind threshold matches canvas yurt rated wind-load tolerance',
-      'Silent exit on safe conditions — alert fatigue eliminated by design',
-      'Slack message includes location, wind speed, gusts, and timestamp',
-      'API failure routed to a dedicated operations error channel',
-      'Gives on-site team time to secure flaps, drop awnings, or relocate guests',
+    screenshots: [
+      '/screenshots/obsidian-ridge/01-canvas.jpg',
+      '/screenshots/obsidian-ridge/02-canvas.jpg',
+      '/screenshots/obsidian-ridge/03-canvas.jpg',
+      '/screenshots/obsidian-ridge/04-canvas.jpg',
     ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #1f2937 0%, #0891b2 100%)',
-  },
-  {
-    id: 'refined-cabins',
-    title: 'Refined Cabins',
-    tagline: 'Material Procurement & Multi-Stage Approval Engine',
-    category: 'Approval Workflow · Business Automation',
-    stack: ['n8n', 'Webhooks', 'Gmail', 'Google Sheets'],
-    description:
-      'Two-gate approval pipeline for exotic leather and aviation upholstery sourcing. A Master Craftsman quality gate is followed by a Project Manager financial gate before any purchase order is released. Full audit log and live project board.',
-    highlights: [
-      'Zone 1 — Intake: webhook-triggered sourcing request from sourcing agents',
-      'Zone 2 — Craftsman Gate: email with Approve/Reject links sent to Master Craftsman; rejection sends agent back to source alternatives',
-      'Zone 3 — PM Gate: cost, vendor terms, and budget-fit approval by Project Manager',
-      'Zone 4 — Fulfillment: status flipped to In-Transit on project board on PM approval',
-      'Full audit log captures every decision, timestamp, and approver',
-      'Used for Bentley, Rolls-Royce, Porsche, and Gulfstream cabin re-trim projects',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #292524 0%, #92400e 100%)',
-  },
-  {
-    id: 'shield-and-canopy-insurance',
-    title: 'Shield & Canopy Insurance Group',
-    tagline: 'License Compliance Alert System',
-    category: 'Compliance Automation',
-    stack: ['n8n', 'Google Sheets', 'Gmail'],
-    description:
-      'Monitors insurance agent license expiration dates across a 30-agent dataset. Sends tiered alerts at 90, 30, and 7-day windows to agents and compliance managers, preventing regulatory lapses.',
-    highlights: [
-      '30-agent dataset with multi-state license tracking',
-      'Three alert tiers: 90-day early warning, 30-day action required, 7-day critical',
-      'Agents receive personalized emails; compliance managers receive summary reports',
-      'Runs on a daily schedule — no manual monitoring required',
-      'Prevents license lapses that would trigger regulatory penalties or lost sales',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
-  },
-  {
-    id: 'summit-ridge-heritage',
-    title: 'Summit Ridge Heritage Restorations',
-    tagline: 'Legacy Communication Bridge',
-    category: 'CRM Migration · Email Automation',
-    stack: ['n8n', 'Gmail', 'Google Drive', 'Google Sheets'],
-    description:
-      'Monitors a legacy Gmail inbox for a heritage home renovation contractor. Classifies emails by type (permit, bid, client communication), extracts key data, routes PDF and image attachments to organized Google Drive folders, and logs every message to a project tracker.',
-    highlights: [
-      'Gmail trigger polls legacy inbox every 60 seconds',
-      'Email classifier: permit, bid, or client communication routing',
-      'SplitInBatch node uploads PDF and image attachments to organized Google Drive folders',
-      'Auto-reply to senders and CRM forwarding during migration window',
-      'Full message log in Google Sheets project tracker — date, sender, type, snippet',
-      'Bridge pattern: runs in parallel with new CRM until migration is complete',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #3f3f46 0%, #a16207 100%)',
-  },
-  {
-    id: 'velox-lead-migration',
-    title: 'Velox Lead Migration',
-    tagline: 'Lead Migration Bridge',
-    category: 'CRM Migration · Email Automation',
-    stack: ['n8n', 'IMAP', 'Webhooks'],
-    description:
-      'Monitors a legacy IMAP inbox for SEO lead emails, parses contact details (name, email, service, budget) via regex, routes leads by budget priority, and forwards them to a new CRM via webhook. Zero data loss during system migration.',
-    highlights: [
-      'IMAP trigger polls inbox every 60 seconds for new SEO lead emails',
-      'Subject keyword filter: "Audit Request" OR "Backlink Inquiry"',
-      'Regex extraction: Name, Email, Service Type, and Budget from email body',
-      'Budget-based priority routing before CRM webhook forward',
-      'Unmatched emails silently ignored — no noise, no false positives',
-      'Zero data loss guarantee during legacy-to-new-CRM transition period',
-    ],
-    // Automation, NOT SEO: the CLIENT is in SEO; the DELIVERABLE is an
-    // IMAP→CRM bridge. Precedence criterion 3 excludes "the client merely
-    // operating in the SEO industry" — this is the exact case a keyword
-    // matcher would have mis-filed (P1).
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #1e293b 0%, #4f46e5 100%)',
-  },
-  {
-    id: 'veridian-curls-and-tones',
-    title: 'Veridian Curls & Tones',
-    tagline: 'Post-Service Care Automation',
-    category: 'Customer Engagement',
-    stack: ['n8n', 'Google Sheets', 'Gmail', 'Discord'],
-    description:
-      'Sends personalized aftercare emails to salon clients 48 hours after their appointment, matched to service type (Chemical/Color or Natural Styling). Simultaneously notifies the assigned stylist via Discord to follow up personally.',
-    highlights: [
-      'Google Sheets checkout log triggers the workflow per completed appointment',
-      'Service-matched email: Chemical/Color clients get vivid color aftercare, Natural Styling get texture care guide',
-      'Stylist Discord notification fires simultaneously for personal follow-up',
-      'Error path: missing or invalid email logged to Error Log tab, processing stopped cleanly',
-      '48-hour delay built into the workflow — no manual scheduling needed',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #831843 0%, #ec4899 100%)',
   },
   {
     id: 'spine-and-ledger',
@@ -741,112 +599,6 @@ export const projects: Project[] = [
     lines: ['automation'],
     gradient: 'linear-gradient(135deg, #44403c 0%, #b45309 100%)',
     screenshots: ['/screenshots/velvet-crema-lab/workflow-canvas.png'],
-  },
-  {
-    id: 'glacier-and-gorse',
-    title: 'Glacier & Gorse',
-    tagline: 'Automated Expedition Alert & Logistics System',
-    category: 'Logistics Automation · Alert System',
-    stack: ['Node.js', 'Express', 'Playwright', 'Excel/XLSX'],
-    description:
-      'Automated expedition alert and logistics system for an outdoor adventure company. Handles expedition scheduling, participant alerts, and logistics coordination with Excel-based reporting and end-to-end Playwright test coverage.',
-    highlights: [
-      'Express-based backend handling expedition intake and routing',
-      'Excel/XLSX report generation for logistics and participant data',
-      'Automated alerts for expedition status changes and scheduling',
-      'Full Playwright E2E test suite for workflow verification',
-      'PDF report generation for expedition briefings',
-    ],
-    // Named boundary call (ADR-0001): stays Automation. Its highlights evidence
-    // reporting and alerting, not a persistent datastore + its own UI, so it
-    // fails criterion 2. One-line edit to revisit.
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #0c2340 0%, #1a5276 100%)',
-  },
-  {
-    id: 'bags-emporium',
-    title: 'Bags Emporium',
-    tagline: 'Tiered Pricing & Inventory Management',
-    category: 'E-commerce · Inventory Automation',
-    stack: ['PHP', 'Excel/XLSX', 'Google Sheets'],
-    description:
-      'Pricing tier management and inventory tracking system for a bags retail store. Manages multi-tier product pricing (₱20–₱500 range) with structured Excel-based data management for stock and sales tracking.',
-    highlights: [
-      'Multi-tier pricing structure covering ₱20–₱500 product range',
-      'Excel-based inventory and pricing data management',
-      'Structured data schema for stock levels and product categories',
-    ],
-    // Named boundary call (ADR-0001): stays Automation. No UI and no persistent
-    // datastore evidenced in its highlights, so it fails criterion 2.
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #1a0a2e 0%, #6b21a8 100%)',
-  },
-  {
-    id: 'cafe-supply-optimizer',
-    title: 'CafeSupplyOptimizer',
-    tagline: 'Cafe Supply Chain Optimization',
-    category: 'Supply Chain · Inventory Automation',
-    stack: ['n8n', 'Google Sheets'],
-    description:
-      'Supply chain optimization workflow for a cafe, automating inventory tracking, supplier order triggers, and stock level monitoring to eliminate manual reorder processes and reduce waste.',
-    highlights: [
-      'Automated low-stock detection and reorder trigger',
-      'Supplier communication automation on stock threshold breach',
-      'Inventory consumption tracking and reporting',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #1a1000 0%, #92400e 100%)',
-  },
-  {
-    id: 'aurora-archives',
-    title: 'Aurora Archives',
-    tagline: 'Automated Document Archiving System',
-    category: 'Document Management · Automation',
-    stack: ['n8n', 'Google Drive', 'Google Sheets'],
-    description:
-      'Automated document archiving and organization system. Monitors incoming files, classifies documents by type, routes them to organized archive folders, and maintains a searchable index for retrieval.',
-    highlights: [
-      'Automated document intake and classification by type',
-      'Organized folder routing in Google Drive',
-      'Searchable archive index maintained in Google Sheets',
-      'Eliminates manual filing and document misplacement',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #0d1b2a 0%, #4a90d9 100%)',
-  },
-  {
-    id: 'prism-root-color-lab',
-    title: 'Prism Root Color Lab',
-    tagline: 'Color Service Automation',
-    category: 'Beauty & Wellness Automation',
-    stack: ['n8n', 'Google Sheets', 'Gmail'],
-    description:
-      'Automated workflow system for a hair color lab. Manages client color formulation records, service scheduling, and follow-up communications to streamline color consultations and appointment management.',
-    highlights: [
-      'Client color formulation records stored and retrieved automatically',
-      'Appointment scheduling and confirmation workflow',
-      'Post-service follow-up emails with care instructions',
-      'Service history tracking per client',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #2d0a3e 0%, #c026d3 100%)',
-  },
-  {
-    id: 'solstice-salt-flow',
-    title: 'Solstice Salt Flow',
-    tagline: 'Wellness Session Booking Automation',
-    category: 'Wellness · Booking Automation',
-    stack: ['n8n', 'Google Sheets', 'Gmail', 'Telegram'],
-    description:
-      'Booking and session management automation for a salt therapy and wellness studio. Handles session reservations, intake forms, reminder notifications, and post-session follow-ups.',
-    highlights: [
-      'Session booking intake via webhook',
-      'Automated reminder notifications via Telegram and email',
-      'Post-session follow-up and rebooking prompts',
-      'Session log maintained in Google Sheets',
-    ],
-    lines: ['automation'],
-    gradient: 'linear-gradient(135deg, #0e3460 0%, #27a4a4 100%)',
   },
 
   // ── New Apps entries (text-only until Phase C lands screenshots) ──────────

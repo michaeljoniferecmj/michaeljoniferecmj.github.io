@@ -291,7 +291,7 @@ test.describe('Service lines', () => {
       websites: 4,
       apps: 6,
       seo: 2,
-      automation: 24,
+      automation: 10,
       'ai-agents': 1,
     });
 
