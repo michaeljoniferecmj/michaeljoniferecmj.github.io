@@ -10,12 +10,13 @@ export type Profile = {
 
 export const profile: Profile = {
   name: 'Michael Ervin Superable',
-  title: 'Automation & Full Stack Developer',
+  title: 'Web, App, SEO, Automation & AI Agent Developer',
   email: 'michaeljonifer17@gmail.com',
   linkedin: 'https://linkedin.com/in/michael-superable',
   github: 'https://github.com/michaeljoniferecmj',
   summary:
-    'Automation specialist designing end-to-end n8n workflows, lead qualification pipelines, and AI-powered tools for small and medium businesses.',
+    'Developer building websites, apps, SEO, workflow automation, and AI agents for '
+    + 'small and medium businesses — from live storefronts to multi-agent AI platforms.',
   skills: [
     'n8n Workflow Automation',
     'Webhook Integration & API Design',

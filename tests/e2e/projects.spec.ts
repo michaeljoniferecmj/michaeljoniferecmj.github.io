@@ -1,13 +1,6 @@
 import { test, expect, Locator, Page } from '@playwright/test';
-import { projects, featuredProjects } from '../../data/projects';
-
-const CARD_SELECTOR = 'article[data-testid^="project-card-"]';
-
-async function showAllProjects(page: Page) {
-  await page.goto('/');
-  await page.getByRole('button', { name: /View All \d+ Projects/ }).click();
-  await expect(page.locator(CARD_SELECTOR)).toHaveCount(projects.length);
-}
+import { projects } from '../../data/projects';
+import { CARD_SELECTOR, TOTAL_CARD_INSTANCES, showAllLines } from './helpers';
 
 async function openModalForCard(page: Page, projectId: string): Promise<Locator> {
   const card = page.getByTestId(`project-card-${projectId}`);
@@ -19,24 +12,21 @@ async function openModalForCard(page: Page, projectId: string): Promise<Locator>
 }
 
 test.describe('Projects section', () => {
-  test('shows featured projects by default and all projects after "View All"', async ({ page }) => {
+  // Replaces the old featured/"View All" test. There is no longer one global
+  // toggle: each service line is independently bounded and expanded. The
+  // per-line anchor, bound, and control assertions live in
+  // service-lines.spec.ts; what this file keeps is the DOM-identity guarantee
+  // that every card is uniquely addressable, which the modal tests below rely
+  // on.
+  test('every project in the data file has exactly one uniquely addressable card', async ({ page }) => {
     await page.goto('/');
+    await showAllLines(page);
 
-    const cards = page.locator(CARD_SELECTOR);
-    await expect(cards).toHaveCount(featuredProjects.length);
+    await expect(page.locator(CARD_SELECTOR)).toHaveCount(TOTAL_CARD_INSTANCES);
 
-    await page.getByRole('button', { name: `View All ${projects.length} Projects` }).click();
-    await expect(cards).toHaveCount(projects.length);
-    await expect(page.getByText(`Showing all ${projects.length} projects`)).toBeVisible();
-
-    // Every project from the data file has its own card, exactly once.
     for (const project of projects) {
       await expect(page.getByTestId(`project-card-${project.id}`)).toHaveCount(1);
     }
-
-    // Collapse back down.
-    await page.getByRole('button', { name: 'Show Less' }).click();
-    await expect(cards).toHaveCount(featuredProjects.length);
   });
 
   test('project card opens a modal with the project details; closes via button and Escape', async ({ page }) => {
@@ -72,10 +62,19 @@ test.describe('Projects section', () => {
   });
 
   test('every screenshot listed in the data file loads in its project modal', async ({ page }) => {
+    // Explicit budget, not the 30s default. This test's scope grew with the
+    // restructure: it now expands all five lines, traverses 36 card instances,
+    // and opens a modal per screenshotted project while polling each image's
+    // naturalWidth. Typical wall time is ~20s, but it has been observed at
+    // 35.6s under parallel load — i.e. red CI on an unrelated future PR. The
+    // budget states the real cost; it does not reduce what is covered.
+    test.setTimeout(90_000);
+
     const projectsWithShots = projects.filter((p) => (p.screenshots ?? []).length > 0);
     expect(projectsWithShots.length).toBeGreaterThan(0);
 
-    await showAllProjects(page);
+    await page.goto('/');
+    await showAllLines(page);
 
     for (const project of projectsWithShots) {
       const shots = project.screenshots!;

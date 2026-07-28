@@ -116,12 +116,17 @@ export function Skills() {
       aria-labelledby="skills-heading"
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+        {/* accent-dark (6.02:1 on canvas), not accent (4.28:1). At 11px bold
+            this is below the large-text threshold, so 4.5:1 applies. */}
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Expertise
         </p>
         <h2
           id="skills-heading"
-          className="mt-2 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl"
+          // Focus target for fragment navigation (WCAG 2.4.3) — applies to all
+          // nine section anchors, not only the new service-line ones.
+          tabIndex={-1}
+          className="mt-2 rounded text-3xl font-bold tracking-tight text-navy-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas sm:text-4xl"
         >
           Tech Stack &amp; Tools
         </h2>
@@ -136,6 +141,12 @@ export function Skills() {
               key={category.title}
               className="flex flex-col rounded-2xl bg-navy-100/70 p-6 transition hover:bg-navy-100"
             >
+              {/* `text-accent` KEPT here deliberately. This is a glyph, not
+                  text, so 1.4.3's 4.5:1 does not apply; the applicable rule is
+                  1.4.11 Non-text Contrast at 3:1, and accent-on-white is
+                  4.47:1 — a comfortable pass. It is also redundant with the
+                  <h3> directly below it, so it is arguably decorative and
+                  exempt outright. Not changed to match a string pattern. */}
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-accent shadow-sm">
                 {category.icon}
               </span>

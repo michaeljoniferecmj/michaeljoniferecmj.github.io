@@ -1,12 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import type { Project } from '@/data/projects';
+import type { Project, ServiceLine } from '@/data/projects';
 import { ProjectModal } from './ProjectModal';
 
-type Props = { project: Project };
+type Props = {
+  project: Project;
+  /**
+   * Set ONLY on a cross-listed (non-primary) instance of a card, which suffixes
+   * the testid to `project-card-{id}-{line}`. The unsuffixed instance renders in
+   * `project.lines[0]` and stays the canonical, uniquely-addressable handle (P5),
+   * so `getByTestId('project-card-{id}')` never hits Playwright strict mode.
+   */
+  instanceLine?: ServiceLine;
+};
 
-export function ProjectCard({ project }: Props) {
+export function ProjectCard({ project, instanceLine }: Props) {
   const shots = project.screenshots ?? [];
   const hasImages = shots.length > 0;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -25,7 +34,7 @@ export function ProjectCard({ project }: Props) {
     <>
       <article
         className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg md:grid-cols-5"
-        data-testid={`project-card-${project.id}`}
+        data-testid={`project-card-${project.id}${instanceLine ? `-${instanceLine}` : ''}`}
       >
         {/* ── Preview panel ──
             min-h gives height on mobile. On desktop, grid stretches this

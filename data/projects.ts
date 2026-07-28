@@ -1,12 +1,102 @@
+/**
+ * Service-line taxonomy — see ADR-0001.
+ *
+ * P1: `lines` is the controlled key; `category` is prose. They never touch.
+ *     NEVER parse `category` in code.
+ * P2: Membership, anchor status, and ordering are one-line edits in THIS file.
+ *     No component may hard-code a project id or a curated list.
+ * P3: Every invariant the type system cannot express is asserted at module
+ *     scope and fails `next build`.
+ * P4: `sectionId` is the public URL contract; `id` is the internal key.
+ * P5: The unsuffixed card instance is canonical and must render where it is
+ *     visible by default.
+ */
+
+export type ServiceLine = 'websites' | 'apps' | 'seo' | 'automation' | 'ai-agents';
+
+export type ServiceLineDef = {
+  id: ServiceLine;
+  /** Display label — used in headings, nav, and control copy. */
+  label: string;
+  /** DOM id of the section; also the nav href fragment. PUBLIC CONTRACT (P4). */
+  sectionId: string;
+  /** One-sentence client-facing framing, rendered under the heading. */
+  blurb: string;
+};
+
+/**
+ * Order here is the single source of truth for BOTH the nav order and the
+ * section stack order. They must never diverge (Nielsen #4 — consistency).
+ */
+export const SERVICE_LINES: ServiceLineDef[] = [
+  {
+    id: 'websites',
+    label: 'Websites',
+    sectionId: 'projects-websites',
+    // COUPLING (ADR-0001, deferred `proofStatus` trigger): the "one live client
+    // build" clause is true ONLY because `houseplan-group` is cross-listed into
+    // this line. If that cross-listing is ever removed, this sentence silently
+    // becomes false — rewrite it, and adopt `proofStatus` at the same time.
+    blurb:
+      'Marketing and catalog sites. One live client build serving real customers today, ' +
+      'plus three complete pitch packages with working demo sites.',
+  },
+  {
+    id: 'apps',
+    label: 'Apps',
+    sectionId: 'projects-apps',
+    blurb:
+      'Standalone software products with their own data and interfaces — SaaS platforms, ' +
+      'internal tools, and cross-platform desktop and mobile apps. Three are shipped and ' +
+      'screenshotted; three are built and documented but not yet photographed.',
+  },
+  {
+    id: 'seo',
+    label: 'SEO',
+    sectionId: 'projects-seo',
+    blurb:
+      'Organic-search architecture as the deliverable: crawlable taxonomies, faceted ' +
+      'catalogs, and landing pages built to rank. One case study — a live, revenue-generating ' +
+      'storefront that also appears under Websites.',
+  },
+  {
+    id: 'automation',
+    label: 'Automation',
+    sectionId: 'projects-automation',
+    blurb:
+      'Triggered workflow systems that remove manual steps — intake, routing, approvals, ' +
+      'alerting, and reporting. The deepest and most established line here, by a wide margin.',
+  },
+  {
+    id: 'ai-agents',
+    label: 'AI Agents',
+    sectionId: 'projects-ai-agents',
+    blurb:
+      'Agentic systems where coordinated AI does the work — not a single model call bolted ' +
+      'onto a workflow. The newest line: one flagship platform, held to that definition ' +
+      'rather than padded to look deeper.',
+  },
+];
+
 export type Project = {
   id: string;
   title: string;
   tagline: string;
+  /** UNCHANGED — freeform display kicker. Prose, never parsed (P1). */
   category: string;
   stack: string[];
   description: string;
   highlights: string[];
-  featured?: boolean;
+  /**
+   * Service-line membership. Non-empty BY TYPE; `lines[0]` is the PRIMARY line.
+   *
+   * Tuple, not `ServiceLine[]`: tsconfig has `strict: true` but
+   * `noUncheckedIndexedAccess` is OFF, so `ServiceLine[]` would make `lines[0]`
+   * non-null by silent assumption rather than by proof.
+   */
+  lines: [ServiceLine, ...ServiceLine[]];
+  /** Exactly one project per line. Must equal `lines[0]` when set. */
+  anchorFor?: ServiceLine;
   gradient: string;
   screenshots?: string[];
   liveUrl?: string;
@@ -41,67 +131,11 @@ export const projects: Project[] = [
       'Planning Rules Agent live for two NSW councils — Kempsey and Port Macquarie-Hastings',
       'LangSmith tracing across all orchestration nodes for full observability',
     ],
-    featured: true,
+    lines: ['ai-agents'],
+    anchorFor: 'ai-agents',
     gradient: 'linear-gradient(135deg, #0f172a 0%, #0891b2 100%)',
     screenshots: ['/screenshots/ask-trevor/01-trevor-ai-command-centre.png'],
     liveUrl: 'https://ask-trevor-report.vercel.app',
-  },
-  {
-    id: 'vellum-and-vine',
-    title: 'Vellum & Vine',
-    tagline: 'Lead Qualification & Brief Generator',
-    category: 'Lead Generation · CRM Automation',
-    stack: ['n8n', 'HubSpot', 'Google Docs', 'Slack', 'Gmail'],
-    description:
-      'Turns boutique agency lead intake into a fully qualified, CRM-synced, brief-ready pipeline in under 30 seconds. Applies a 6-rule scoring algorithm (0–50 score, S/A/B/C tiers), enforces a $3K budget gate, upserts HubSpot contacts, and generates a personalized Discovery Brief Google Doc from a 13-token template.',
-    highlights: [
-      '6-rule scoring algorithm producing S/A/B/C lead tiers',
-      '$3K monthly budget hard gate — disqualified leads get a courteous rejection email automatically',
-      'HubSpot contact and deal upserted with full scoring metadata',
-      'Personalized Discovery Brief Google Doc generated from a 13-token template',
-      'Slack alert to team lead with a direct link to the generated brief',
-      'Replaced ~4 hours/week of manual triage for the agency team',
-    ],
-    gradient: 'linear-gradient(135deg, #0f172a 0%, #4338ca 100%)',
-  },
-  {
-    id: 'resonance-stringed-instruments',
-    title: 'Resonance Stringed Instruments',
-    tagline: 'Repair Triage System',
-    category: 'Business Process Automation',
-    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Gmail', 'Discord'],
-    description:
-      '23-node n8n workflow with 5 execution paths. Validates intake payloads, classifies inquiries into urgent repair, standard repair, and sales/appraisal tracks, reads live workshop capacity from Google Sheets, creates project-board cards, and emails customers a branded confirmation with a unique tracking ID.',
-    highlights: [
-      '23 nodes across 5 execution paths: urgent repair, standard repair, sales, appraisal, dead-letter',
-      'Live workshop capacity check from Google Sheets before routing',
-      'Unique tracking ID generated per inquiry for customer reference',
-      'Dead-letter path with Discord alerts ensures no lead is ever lost',
-      'Branded confirmation email sent to customer within seconds of submission',
-    ],
-    gradient: 'linear-gradient(135deg, #0f172a 0%, #0d9488 100%)',
-    repoUrl: 'https://github.com/michaeljoniferecmj/resonance-stringed-instruments',
-  },
-  {
-    id: 'root-and-rind-bistro',
-    title: 'Root & Rind Bistro',
-    tagline: 'AI Staff Knowledge Assistant',
-    category: 'AI Integration · Internal Tooling',
-    stack: ['n8n', 'OpenAI GPT-4o-mini', 'Gmail'],
-    description:
-      'GPT-4o-mini chatbot for restaurant waitstaff. Answers real-time questions about dish sourcing, farm origins, allergens, and HR policies from a curated knowledge base. Automatically escalates unknown questions to HR via email.',
-    highlights: [
-      'Powered by OpenAI GPT-4o-mini with a curated knowledge base of dishes, farms, and allergens',
-      'Handles two knowledge domains: menu/sourcing questions and HR policy questions',
-      'Automatic email escalation to HR Manager when question falls outside the knowledge base',
-      'Zero onboarding required — staff interact via a simple chat interface',
-      'Knowledge base updated via a CSV file, no code changes needed',
-    ],
-    gradient: 'linear-gradient(135deg, #1e1b4b 0%, #7c3aed 100%)',
-    screenshots: [
-      '/screenshots/root-and-rind/workflow-success.jpg',
-      '/screenshots/root-and-rind/workflow-false.jpg',
-    ],
   },
   {
     id: 'irongrid-it',
@@ -120,6 +154,8 @@ export const projects: Project[] = [
       'Real-time email notification to the technician with the GO/NO-GO decision',
       'Eliminates phone tag and manual email chains during critical downtime events',
     ],
+    lines: ['automation'],
+    anchorFor: 'automation',
     gradient: 'linear-gradient(135deg, #0f172a 0%, #b45309 100%)',
     screenshots: [
       '/screenshots/irongrid-it/01-workflow-canvas.jpg',
@@ -129,6 +165,117 @@ export const projects: Project[] = [
       '/screenshots/irongrid-it/05-sheets-audit-log.jpg',
     ],
     repoUrl: 'https://github.com/michaeljoniferecmj/irongrid-hardware-procurement',
+  },
+  {
+    id: 'iron-and-vine',
+    title: 'Iron & Vine',
+    tagline: 'Lead Qualification System',
+    category: 'Lead Generation · CRM Automation',
+    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Gmail', 'Discord'],
+    description:
+      "Ingests event-booking inquiries from a mobile meadery's website, validates and normalizes the payload, qualifies leads against service-area and guest-count rules, then routes each lead to the correct Google Sheets CRM tab with a tailored email response and Discord notification.",
+    highlights: [
+      'Webhook intake with full payload validation and normalization',
+      'Zip code service-area check — out-of-range leads routed to a separate sheet with Discord alert',
+      'Guest count switch: <50 (Low Priority), 50–200 (Standard), >200 (Requires Review)',
+      'Event type branching: Wedding vs Corporate/Festival with separate CRM tabs and email templates',
+      'Error path captures malformed submissions to an Errors tab — no inquiry is lost',
+      'Replaced manual copy-paste triage by the events coordinator',
+    ],
+    lines: ['automation'],
+    gradient: 'linear-gradient(135deg, #1e293b 0%, #6366f1 100%)',
+    screenshots: [
+      '/screenshots/iron-vine/01-wedding-qualified-branch.jpg',
+      '/screenshots/iron-vine/02-requires-review-branch.jpg',
+      '/screenshots/iron-vine/03-out-of-range-branch.jpg',
+      '/screenshots/iron-vine/04-error-handler-branch.jpg',
+    ],
+  },
+  {
+    id: 'ginkgo-leaf-academy',
+    title: 'Ginkgo Leaf Academy',
+    tagline: 'Enrollment Inquiry Prioritization',
+    category: 'Lead Triage · Business Automation',
+    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Discord'],
+    description:
+      'Automated enrollment-inquiry triage for a Montessori school. Inquiries arrive via webhook, get tagged URGENT or STANDARD based on how soon the desired start date is, every lead is logged to Google Sheets, and urgent inquiries fire an immediate Discord alert to staff.',
+    highlights: [
+      'Priority computed from desired-start-date proximity — no manual inbox triage',
+      'Every lead logged to Google Sheets regardless of priority, so nothing slips',
+      'Discord alert fires only for URGENT leads — staff attention goes where it matters',
+      'Input sanitization with sensible fallbacks (missing phone → N/A) and submission timestamps',
+      'Fully documented workflow: architecture diagram, sample payloads, and setup guide in the repo',
+    ],
+    lines: ['automation'],
+    gradient: 'linear-gradient(135deg, #14532d 0%, #65a30d 100%)',
+    screenshots: [
+      '/screenshots/ginkgo-leaf-academy/canvas.jpg',
+      '/screenshots/ginkgo-leaf-academy/sheet.jpg',
+      '/screenshots/ginkgo-leaf-academy/discord.jpg',
+    ],
+    repoUrl: 'https://github.com/michaeljoniferecmj/ginkgo-leaf-academy',
+  },
+  {
+    id: 'vellum-and-vine',
+    title: 'Vellum & Vine',
+    tagline: 'Lead Qualification & Brief Generator',
+    category: 'Lead Generation · CRM Automation',
+    stack: ['n8n', 'HubSpot', 'Google Docs', 'Slack', 'Gmail'],
+    description:
+      'Turns boutique agency lead intake into a fully qualified, CRM-synced, brief-ready pipeline in under 30 seconds. Applies a 6-rule scoring algorithm (0–50 score, S/A/B/C tiers), enforces a $3K budget gate, upserts HubSpot contacts, and generates a personalized Discovery Brief Google Doc from a 13-token template.',
+    highlights: [
+      '6-rule scoring algorithm producing S/A/B/C lead tiers',
+      '$3K monthly budget hard gate — disqualified leads get a courteous rejection email automatically',
+      'HubSpot contact and deal upserted with full scoring metadata',
+      'Personalized Discovery Brief Google Doc generated from a 13-token template',
+      'Slack alert to team lead with a direct link to the generated brief',
+      'Replaced ~4 hours/week of manual triage for the agency team',
+    ],
+    lines: ['automation'],
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #4338ca 100%)',
+  },
+  {
+    id: 'resonance-stringed-instruments',
+    title: 'Resonance Stringed Instruments',
+    tagline: 'Repair Triage System',
+    category: 'Business Process Automation',
+    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Gmail', 'Discord'],
+    description:
+      '23-node n8n workflow with 5 execution paths. Validates intake payloads, classifies inquiries into urgent repair, standard repair, and sales/appraisal tracks, reads live workshop capacity from Google Sheets, creates project-board cards, and emails customers a branded confirmation with a unique tracking ID.',
+    highlights: [
+      '23 nodes across 5 execution paths: urgent repair, standard repair, sales, appraisal, dead-letter',
+      'Live workshop capacity check from Google Sheets before routing',
+      'Unique tracking ID generated per inquiry for customer reference',
+      'Dead-letter path with Discord alerts ensures no lead is ever lost',
+      'Branded confirmation email sent to customer within seconds of submission',
+    ],
+    lines: ['automation'],
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #0d9488 100%)',
+    repoUrl: 'https://github.com/michaeljoniferecmj/resonance-stringed-instruments',
+  },
+  {
+    id: 'root-and-rind-bistro',
+    title: 'Root & Rind Bistro',
+    tagline: 'AI Staff Knowledge Assistant',
+    category: 'AI Integration · Internal Tooling',
+    stack: ['n8n', 'OpenAI GPT-4o-mini', 'Gmail'],
+    description:
+      'GPT-4o-mini chatbot for restaurant waitstaff. Answers real-time questions about dish sourcing, farm origins, allergens, and HR policies from a curated knowledge base. Automatically escalates unknown questions to HR via email.',
+    highlights: [
+      'Powered by OpenAI GPT-4o-mini with a curated knowledge base of dishes, farms, and allergens',
+      'Handles two knowledge domains: menu/sourcing questions and HR policy questions',
+      'Automatic email escalation to HR Manager when question falls outside the knowledge base',
+      'Zero onboarding required — staff interact via a simple chat interface',
+      'Knowledge base updated via a CSV file, no code changes needed',
+    ],
+    // Automation, NOT AI Agents (ADR-0001 precedence criterion 1): a single
+    // GPT-4o-mini node inside an n8n flow is not an agentic system.
+    lines: ['automation'],
+    gradient: 'linear-gradient(135deg, #1e1b4b 0%, #7c3aed 100%)',
+    screenshots: [
+      '/screenshots/root-and-rind/workflow-success.jpg',
+      '/screenshots/root-and-rind/workflow-false.jpg',
+    ],
   },
   {
     id: 'terrafirm-machinery-academy',
@@ -147,6 +294,7 @@ export const projects: Project[] = [
       'Gmail draft queued for sales rep review with pre-filled personalized quote',
       'Includes 5 ready-to-run test cases with curl script',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #14532d 0%, #166534 100%)',
   },
   {
@@ -166,6 +314,7 @@ export const projects: Project[] = [
       'All output escaped via a single e() helper — auditable XSS protection',
       'Reverse-chronological feed always showing the 10 most recent status updates',
     ],
+    lines: ['apps'],
     gradient: 'linear-gradient(135deg, #4c1d95 0%, #db2777 100%)',
     screenshots: [
       '/screenshots/velvet-flutter-salon-hub/status-board.png',
@@ -176,7 +325,9 @@ export const projects: Project[] = [
     id: 'houseplan-group',
     title: 'HousePlan Group',
     tagline: 'Digital House Plan Marketplace',
-    category: 'Web Development · Client Website',
+    // Kicker rewritten at Gate A1 for prose/taxonomy coherence: this card is
+    // 100% of what a visitor reads under the SEO heading.
+    category: 'SEO Architecture · Client Website',
     stack: ['WordPress', 'WooCommerce', 'Elementor', 'Houzez Theme', 'PHP'],
     description:
       'Live production website for an Australian house plan business (a subsidiary of Dennis Partners Structural & Civil Engineering, est. 1976). Sells professionally designed house, granny flat, garage, and shed-house plans as instant digital downloads in editable AutoCAD and Revit formats, with a browsable catalog filtered by architectural style and plan category.',
@@ -188,7 +339,14 @@ export const projects: Project[] = [
       'Plan detail pages with 3D render galleries, spec tables, and plan-set comparison',
       'Educational content hub: How It Works, What You Get, DA vs CDC approval-pathway guides, and FAQ',
     ],
-    featured: true,
+    // The ONE cross-listed project (FR-03). Primary line is `seo` — it clears
+    // precedence criterion 3 (generated page-per-style taxonomy + indexable
+    // faceted catalog) before criterion 4. It independently clears Websites
+    // (live WooCommerce storefront), which is what earns the second line.
+    // Its unsuffixed card therefore renders in #projects-seo; the Websites
+    // section renders `project-card-houseplan-group-websites`.
+    lines: ['seo', 'websites'],
+    anchorFor: 'seo',
     gradient: 'linear-gradient(135deg, #0f172a 0%, #059669 100%)',
     screenshots: [
       '/screenshots/houseplan-group/01-home-hero.png',
@@ -196,6 +354,7 @@ export const projects: Project[] = [
       '/screenshots/houseplan-group/03-home-styles-section.png',
       '/screenshots/houseplan-group/04-how-it-works.png',
       '/screenshots/houseplan-group/05-what-you-get.png',
+      '/screenshots/houseplan-group/06-mobile-home.png',
     ],
     liveUrl: 'https://houseplangroup.com.au',
   },
@@ -216,6 +375,8 @@ export const projects: Project[] = [
       'Claude-powered response drafting with tone profiles, auto-reply rules, sentiment classification, and a human approval queue for sub-4-star reviews',
       'Stripe subscription billing with webhook idempotency log, plus an internal admin panel with MRR dashboard and per-org feature flags',
     ],
+    lines: ['apps'],
+    anchorFor: 'apps',
     gradient: 'linear-gradient(135deg, #0f172a 0%, #2563eb 100%)',
     screenshots: [
       '/screenshots/reviewpilot/landing.png',
@@ -239,6 +400,9 @@ export const projects: Project[] = [
       'UI style tile: sage-green, gold, and cream palette with every token traced to a specific client asset',
       'Proposal recommends WordPress + Google Business Profile, with real-time booking and payments deliberately deferred from v1',
     ],
+    // Websites, not SEO: search-informed IA rationale is explicitly excluded by
+    // precedence criterion 3 — no shipped taxonomy, no measured organic outcome.
+    lines: ['websites'],
     gradient: 'linear-gradient(135deg, #1c3527 0%, #b7791f 100%)',
     screenshots: [
       '/screenshots/heides-cozy-spa/01-home-hero.png',
@@ -264,6 +428,9 @@ export const projects: Project[] = [
       'Gold reserved exclusively for the Request a Quote button — impossible to miss when it counts',
       'Process transparency baked into the homepage: Inquire → Design Proof → Approve → Production → Delivery',
     ],
+    // Websites, not SEO: a single-page demo has no page-per-facet to index.
+    lines: ['websites'],
+    anchorFor: 'websites',
     gradient: 'linear-gradient(135deg, #101c3f 0%, #c9a227 100%)',
     screenshots: [
       '/screenshots/vision-sportswear-ph/01-home-hero.png',
@@ -290,6 +457,9 @@ export const projects: Project[] = [
       'Three-tier design token system (tokens → base → kit) reusable across client pitches',
       'prefers-reduced-motion respected throughout the GSAP scroll choreography',
     ],
+    // Websites, not SEO: seven hand-authored pages is a sitemap, not a
+    // generated page-per-term taxonomy.
+    lines: ['websites'],
     gradient: 'linear-gradient(135deg, #3f1d1d 0%, #b45309 100%)',
     screenshots: [
       '/screenshots/hi-tech-automotive/hi-tech-automotive-1920x1080.jpg',
@@ -315,35 +485,14 @@ export const projects: Project[] = [
       'Encrypted OAuth token storage and Pub/Sub webhook request verification',
       'Deployed to Railway (Singapore) with PostgreSQL + Redis, migrations applied, and green CI (lint, typecheck, build)',
     ],
+    // Apps, not Automation: the Gmail ingestion pipeline is an implementation
+    // detail of a backend + admin platform (criterion 2 — datastore + own UI).
+    lines: ['apps'],
     gradient: 'linear-gradient(135deg, #1e1b4b 0%, #ea580c 100%)',
     screenshots: [
+      '/screenshots/shop-management/01-dashboard.png',
       '/screenshots/shop-management/02-gmail-connected.png',
       '/screenshots/shop-management/03-gmail-disconnected.png',
-    ],
-  },
-  {
-    id: 'iron-and-vine',
-    title: 'Iron & Vine',
-    tagline: 'Lead Qualification System',
-    category: 'Lead Generation · CRM Automation',
-    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Gmail', 'Discord'],
-    description:
-      "Ingests event-booking inquiries from a mobile meadery's website, validates and normalizes the payload, qualifies leads against service-area and guest-count rules, then routes each lead to the correct Google Sheets CRM tab with a tailored email response and Discord notification.",
-    highlights: [
-      'Webhook intake with full payload validation and normalization',
-      'Zip code service-area check — out-of-range leads routed to a separate sheet with Discord alert',
-      'Guest count switch: <50 (Low Priority), 50–200 (Standard), >200 (Requires Review)',
-      'Event type branching: Wedding vs Corporate/Festival with separate CRM tabs and email templates',
-      'Error path captures malformed submissions to an Errors tab — no inquiry is lost',
-      'Replaced manual copy-paste triage by the events coordinator',
-    ],
-    featured: true,
-    gradient: 'linear-gradient(135deg, #1e293b 0%, #6366f1 100%)',
-    screenshots: [
-      '/screenshots/iron-vine/01-wedding-qualified-branch.jpg',
-      '/screenshots/iron-vine/02-requires-review-branch.jpg',
-      '/screenshots/iron-vine/03-out-of-range-branch.jpg',
-      '/screenshots/iron-vine/04-error-handler-branch.jpg',
     ],
   },
   {
@@ -360,32 +509,10 @@ export const projects: Project[] = [
       'Dual notification channels: Discord for staff chat, Slack for operations',
       'Handles after-hours coverage without requiring on-call staff to monitor inboxes',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #dc2626 100%)',
     screenshots: ['/screenshots/midnight-molar/workflow-canvas.png'],
     repoUrl: 'https://github.com/michaeljoniferecmj/midnight-molar-triage',
-  },
-  {
-    id: 'ginkgo-leaf-academy',
-    title: 'Ginkgo Leaf Academy',
-    tagline: 'Enrollment Inquiry Prioritization',
-    category: 'Lead Triage · Business Automation',
-    stack: ['n8n', 'Webhooks', 'Google Sheets', 'Discord'],
-    description:
-      'Automated enrollment-inquiry triage for a Montessori school. Inquiries arrive via webhook, get tagged URGENT or STANDARD based on how soon the desired start date is, every lead is logged to Google Sheets, and urgent inquiries fire an immediate Discord alert to staff.',
-    highlights: [
-      'Priority computed from desired-start-date proximity — no manual inbox triage',
-      'Every lead logged to Google Sheets regardless of priority, so nothing slips',
-      'Discord alert fires only for URGENT leads — staff attention goes where it matters',
-      'Input sanitization with sensible fallbacks (missing phone → N/A) and submission timestamps',
-      'Fully documented workflow: architecture diagram, sample payloads, and setup guide in the repo',
-    ],
-    gradient: 'linear-gradient(135deg, #14532d 0%, #65a30d 100%)',
-    screenshots: [
-      '/screenshots/ginkgo-leaf-academy/canvas.jpg',
-      '/screenshots/ginkgo-leaf-academy/sheet.jpg',
-      '/screenshots/ginkgo-leaf-academy/discord.jpg',
-    ],
-    repoUrl: 'https://github.com/michaeljoniferecmj/ginkgo-leaf-academy',
   },
   {
     id: 'obsidian-ridge',
@@ -402,6 +529,7 @@ export const projects: Project[] = [
       'API failure path: error alert sent to Founder + logged to Google Sheets',
       'Protects guests and equipment by giving staff time to act before conditions worsen',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%)',
     repoUrl: 'https://github.com/michaeljoniferecmj/obsidian-ridge',
   },
@@ -421,6 +549,7 @@ export const projects: Project[] = [
       'API failure routed to a dedicated operations error channel',
       'Gives on-site team time to secure flaps, drop awnings, or relocate guests',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1f2937 0%, #0891b2 100%)',
   },
   {
@@ -439,6 +568,7 @@ export const projects: Project[] = [
       'Full audit log captures every decision, timestamp, and approver',
       'Used for Bentley, Rolls-Royce, Porsche, and Gulfstream cabin re-trim projects',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #292524 0%, #92400e 100%)',
   },
   {
@@ -456,6 +586,7 @@ export const projects: Project[] = [
       'Runs on a daily schedule — no manual monitoring required',
       'Prevents license lapses that would trigger regulatory penalties or lost sales',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
   },
   {
@@ -474,6 +605,7 @@ export const projects: Project[] = [
       'Full message log in Google Sheets project tracker — date, sender, type, snippet',
       'Bridge pattern: runs in parallel with new CRM until migration is complete',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #3f3f46 0%, #a16207 100%)',
   },
   {
@@ -492,6 +624,11 @@ export const projects: Project[] = [
       'Unmatched emails silently ignored — no noise, no false positives',
       'Zero data loss guarantee during legacy-to-new-CRM transition period',
     ],
+    // Automation, NOT SEO: the CLIENT is in SEO; the DELIVERABLE is an
+    // IMAP→CRM bridge. Precedence criterion 3 excludes "the client merely
+    // operating in the SEO industry" — this is the exact case a keyword
+    // matcher would have mis-filed (P1).
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1e293b 0%, #4f46e5 100%)',
   },
   {
@@ -509,6 +646,7 @@ export const projects: Project[] = [
       'Error path: missing or invalid email logged to Error Log tab, processing stopped cleanly',
       '48-hour delay built into the workflow — no manual scheduling needed',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #831843 0%, #ec4899 100%)',
   },
   {
@@ -527,6 +665,7 @@ export const projects: Project[] = [
       'Null-safe fallback for empty description fields — no crash on missing data',
       'Verified with live Google Sheet accessible to anyone with the link',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #422006 0%, #d97706 100%)',
     screenshots: [
       '/screenshots/spine-and-ledger/n8n-error-flow.png',
@@ -546,6 +685,7 @@ export const projects: Project[] = [
       'Order normalization and routing logic',
       'Google Sheets logging for order tracking and fulfillment',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1c0a00 0%, #7c3200 100%)',
     screenshots: [
       '/screenshots/old-barrel-meadery/workflow-canvas.jpg',
@@ -564,6 +704,7 @@ export const projects: Project[] = [
       'Status tracking updated per subscriber action',
       'Google Sheets as the source of truth for subscriber state',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #44403c 0%, #b45309 100%)',
     screenshots: ['/screenshots/velvet-crema-lab/workflow-canvas.png'],
   },
@@ -582,6 +723,10 @@ export const projects: Project[] = [
       'Full Playwright E2E test suite for workflow verification',
       'PDF report generation for expedition briefings',
     ],
+    // Named boundary call (ADR-0001): stays Automation. Its highlights evidence
+    // reporting and alerting, not a persistent datastore + its own UI, so it
+    // fails criterion 2. One-line edit to revisit.
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0c2340 0%, #1a5276 100%)',
   },
   {
@@ -597,6 +742,9 @@ export const projects: Project[] = [
       'Excel-based inventory and pricing data management',
       'Structured data schema for stock levels and product categories',
     ],
+    // Named boundary call (ADR-0001): stays Automation. No UI and no persistent
+    // datastore evidenced in its highlights, so it fails criterion 2.
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1a0a2e 0%, #6b21a8 100%)',
   },
   {
@@ -612,6 +760,7 @@ export const projects: Project[] = [
       'Supplier communication automation on stock threshold breach',
       'Inventory consumption tracking and reporting',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #1a1000 0%, #92400e 100%)',
   },
   {
@@ -628,6 +777,7 @@ export const projects: Project[] = [
       'Searchable archive index maintained in Google Sheets',
       'Eliminates manual filing and document misplacement',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0d1b2a 0%, #4a90d9 100%)',
   },
   {
@@ -644,6 +794,7 @@ export const projects: Project[] = [
       'Post-service follow-up emails with care instructions',
       'Service history tracking per client',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #2d0a3e 0%, #c026d3 100%)',
   },
   {
@@ -660,8 +811,145 @@ export const projects: Project[] = [
       'Post-session follow-up and rebooking prompts',
       'Session log maintained in Google Sheets',
     ],
+    lines: ['automation'],
     gradient: 'linear-gradient(135deg, #0e3460 0%, #27a4a4 100%)',
+  },
+
+  // ── New Apps entries (text-only until Phase C lands screenshots) ──────────
+  // Deliberately appended at the end of the array: with anchor-first ordering
+  // and a bound of 3, this places all three behind the Apps expand control so
+  // the default Apps view is the three screenshotted entries.
+  {
+    id: 'message-hub',
+    title: 'Message Hub',
+    tagline: 'Unified Clinic Inbox — Multi-Tenant SaaS',
+    category: 'SaaS Product · Multi-Tenant Backend',
+    stack: ['Laravel 12', 'PHP 8.3', 'Vue 3.5', 'MySQL', 'Redis', 'Laravel Horizon', 'Vite', 'Playwright'],
+    description:
+      'Multi-tenant SaaS that gives Philippine dental clinics one screen for every customer conversation — web chat, SMS, Viber, and Telegram — with AI-suggested replies a human must approve before anything is sent. Built on a channel-adapter architecture so a new messaging platform is a manifest plus an adapter, never a change to the inbox core. Shipped through v0.2.0 with a green three-suite test run; not yet publicly deployed.',
+    highlights: [
+      'Laravel 12 + Vue 3.5 monolith with an embeddable web-chat widget compiled as its own Vite bundle',
+      'Tenant isolation enforced structurally — every query is business-scoped via global scopes and policies, and a missed scope is treated as a ship-blocking defect, not a bug to triage',
+      '258 tests green at the v0.2.0 release: 200 PHPUnit, 53 Vitest, 5 Playwright end-to-end',
+      'Channel-adapter contract (verifyWebhook / parseInbound / sendMessage / mapStatusCallback / connect) — the connection UI renders from each adapter manifest, so adding a channel is one config line',
+      'Two adapters shipped: web chat (own verification model) and Telegram (first per-tenant-credential platform)',
+      'Every inbound webhook is verified or rejected, answers 200 immediately, dedupes by external_id, and hands off to a Horizon queue — no business logic in the request cycle',
+      'Channel tokens and webhook secrets encrypted at rest, never logged, never included in an LLM prompt',
+      'AI suggests, never auto-sends: no code path can deliver model output to a patient without an explicit human tap',
+    ],
+    lines: ['apps'],
+    gradient: 'linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%)',
+  },
+  {
+    id: 'solo-pm',
+    title: 'SoloPM (Command Center)',
+    tagline: 'Native Desktop Project & Invoicing App',
+    category: 'Desktop Application · Tauri + Rust',
+    stack: ['Tauri 2', 'Rust', 'Vue 3', 'TypeScript', 'SQLite', 'Vitest', 'Bun'],
+    description:
+      'Native cross-platform desktop app for running a one-person software business end to end: projects, clients, time tracking, activity, and invoicing in a single local-first application. A Rust core handles persistence and the filesystem, a TypeScript sidecar owns the business API, and a Vue 3 frontend renders it — with money correctness treated as a proof obligation rather than a test case. Currently at v0.15.0, database schema version 12; distributed as a local build, not yet published.',
+    highlights: [
+      'Tauri 2 + Rust shell around a Vue 3 / TypeScript frontend — a real native binary, not a packaged web page',
+      '1,500+ automated tests across three suites (Rust core, TypeScript sidecar, Vue frontend); one release alone shipped 721 sidecar and 484 frontend tests green',
+      'Invoicing with money-correctness proofs — integer-cent arithmetic with regression tests pinning rounding behaviour, plus concurrency tests proving a single-entry edit can never interleave',
+      'Versioned SQLite schema with explicit migrations — currently schema_version 12, every bump called out in the changelog',
+      'Collapsible full-height sidebar navigation (⌘B) with the layout choice persisted across launches',
+      'Typed API contract generated from an OpenAPI spec (openapi-typescript) so the frontend and sidecar cannot silently drift',
+      'Shopify integration for pulling store data alongside client projects',
+      'Keep-a-Changelog discipline with semantic versioning and an explicit breaking-change section on every release',
+    ],
+    lines: ['apps'],
+    gradient: 'linear-gradient(135deg, #111827 0%, #f59e0b 100%)',
+  },
+  {
+    id: 'shopee-live-sticker-helper',
+    title: 'Shopee Live Sticker Helper',
+    tagline: 'Android Live-Comment Capture & Thermal Printing',
+    category: 'Mobile Application · Kotlin/Android',
+    stack: ['Kotlin 1.9', 'Jetpack Compose', 'Material 3', 'Hilt 2.51', 'Room 2.6', 'Coroutines', 'Gradle/AGP 8.3'],
+    description:
+      'Native Android app for Filipino Shopee Live sellers. An Accessibility Service reads the live comment stream in real time, matches buyer order comments, queues them, and prints sticker labels straight to a Bluetooth thermal printer — so a seller running a live sale never has to transcribe orders by hand. Built as a five-module Gradle project with a signed release APK and a user manual written for non-technical sellers.',
+    highlights: [
+      'Five-module Gradle architecture — :app (Compose UI + Hilt), :core (domain models), :data (Room + repositories), :printer (Bluetooth abstraction), :accessibility (comment scraping) — so the scraper and the printer can each be replaced without touching the UI',
+      'Android AccessibilityService reads the Shopee Live comment stream in real time, with no dependency on an official API',
+      'Bluetooth thermal-printer abstraction behind a Hilt-bound interface, keeping printer-model specifics out of the domain layer',
+      'Room-backed offline queue: CommentEvent → PrintJob → LiveSession, so nothing is lost if the printer drops mid-stream',
+      'Jetpack Compose + Material 3 dark theme, targeting Android 8.0 (API 26) and above',
+      'Signed release APK produced from a checked-in signing configuration',
+      'Ships a plain-language user manual and a KNOWN_ISSUES log written for the seller, not for developers',
+    ],
+    lines: ['apps'],
+    gradient: 'linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)',
   },
 ];
 
-export const featuredProjects: Project[] = projects.filter((p) => p.featured);
+/** Cards shown per line before the visitor expands it. */
+export const DEFAULT_VISIBLE_PER_LINE = 3;
+
+/**
+ * Anchor first, then data-file order. `Array.prototype.sort` is stable in V8,
+ * so array position remains the editorial ordering for every non-anchor (P2).
+ */
+export function projectsForLine(line: ServiceLine): Project[] {
+  return projects
+    .filter((p) => p.lines.includes(line))
+    .sort((a, b) => Number(b.anchorFor === line) - Number(a.anchorFor === line));
+}
+
+export function anchorForLine(line: ServiceLine): Project {
+  const anchor = projects.find((p) => p.anchorFor === line);
+  if (!anchor) throw new Error(`Service line "${line}" has no anchor project`);
+  return anchor;
+}
+
+/**
+ * P3 — every taxonomy invariant the type system cannot express, asserted at
+ * module scope so a violation fails `next build`, `next dev`, and every
+ * Playwright run rather than reaching a visitor. Exported so it can be reused
+ * directly if a unit-test runner is ever added (there is none today).
+ */
+export function assertServiceLineInvariants(): void {
+  // Cardinality — not expressible in the type system.
+  for (const { id } of SERVICE_LINES) {
+    if (!projects.some((p) => p.lines.includes(id)))
+      throw new Error(`Service line "${id}" has no projects`);
+    const n = projects.filter((p) => p.anchorFor === id).length;
+    if (n !== 1)
+      throw new Error(`Service line "${id}" must have exactly one anchor, found ${n}`);
+  }
+
+  const seenIds = new Set<string>();
+  for (const p of projects) {
+    // Id uniqueness — the card testid derives from it.
+    if (seenIds.has(p.id)) throw new Error(`Duplicate project id "${p.id}"`);
+    seenIds.add(p.id);
+
+    // Uniqueness — not expressible in the type system.
+    if (new Set(p.lines).size !== p.lines.length)
+      throw new Error(`Project "${p.id}" has duplicate service lines`);
+
+    // Cross-field agreement — not expressible in the type system. Holds by
+    // construction under the ADR-0001 precedence rule; asserted because the
+    // rule lives in prose and this file does not.
+    if (p.anchorFor && p.anchorFor !== p.lines[0])
+      throw new Error(`Project "${p.id}" must anchor its primary line (lines[0])`);
+  }
+
+  // P5 — the unsuffixed (canonical) card instance must be visible by default,
+  // so `project-card-{id}` stays a stable addressable handle for Playwright.
+  // Scoped to cross-listed projects only: that is the sole case where the
+  // canonical instance could land in a different line than the suffixed one.
+  for (const p of projects.filter((x) => x.lines.length > 1)) {
+    const pos = projectsForLine(p.lines[0]).findIndex((x) => x.id === p.id);
+    if (pos >= DEFAULT_VISIBLE_PER_LINE)
+      throw new Error(
+        `Project "${p.id}" renders its canonical card at position ${pos + 1} of line ` +
+          `"${p.lines[0]}", behind the expand control. P5 requires the unsuffixed instance ` +
+          `to be visible by default, or openModalForCard() will time out rather than fail cleanly.`,
+      );
+  }
+}
+
+assertServiceLineInvariants();
+
+export const anchorProjects: Project[] = SERVICE_LINES.map((l) => anchorForLine(l.id));

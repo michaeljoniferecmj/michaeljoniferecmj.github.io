@@ -1,48 +1,7 @@
-'use client';
-
-import { useState } from 'react';
-import { ProjectCard } from './ProjectCard';
-import { featuredProjects, projects } from '@/data/projects';
-
-function ArrowRight() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="h-4 w-4 transition-transform group-hover:translate-x-1"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
-function ChevronUp() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className="h-4 w-4"
-    >
-      <polyline points="18 15 12 9 6 15" />
-    </svg>
-  );
-}
+import { ProjectLineSection } from './ProjectLineSection';
+import { SERVICE_LINES } from '@/data/projects';
 
 export function Projects() {
-  const [showAll, setShowAll] = useState(false);
-  const displayed = showAll ? projects : featuredProjects;
-
   return (
     <section
       id="projects"
@@ -50,44 +9,31 @@ export function Projects() {
       aria-labelledby="projects-heading"
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+        {/* accent-dark (6.03:1), not accent (4.28:1 — fails AA at 11px bold). */}
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Selected Works
         </p>
         <h2
           id="projects-heading"
-          className="mt-2 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl"
+          // Focus target for fragment navigation (WCAG 2.4.3).
+          tabIndex={-1}
+          className="mt-2 rounded text-3xl font-bold tracking-tight text-navy-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas sm:text-4xl"
         >
           Projects
         </h2>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-navy-600">
-          A collection of automation systems, client websites, and full-stack
-          applications built for real businesses — from emergency triage and
-          procurement pipelines to production SaaS platforms and AI-powered
-          staff assistants.
+          Five service lines, one builder: marketing websites, custom
+          applications, SEO, workflow automation, and AI agents — each led by
+          its strongest proof, with the full catalog one click away.
         </p>
 
-        <div className="mt-12 flex flex-col gap-6">
-          {displayed.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        {/* One component, five instances, keyed by `line.id` and never by array
+            index — so expand state can never follow position if SERVICE_LINES
+            is reordered. */}
+        <div className="mt-14 flex flex-col gap-20">
+          {SERVICE_LINES.map((line) => (
+            <ProjectLineSection key={line.id} line={line} />
           ))}
-        </div>
-
-        <div className="mt-12 flex flex-col items-center gap-3 text-center">
-          <button
-            onClick={() => setShowAll((prev) => !prev)}
-            className="group inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
-          >
-            {showAll ? (
-              <>Show Less <ChevronUp /></>
-            ) : (
-              <>View All {projects.length} Projects <ArrowRight /></>
-            )}
-          </button>
-          <p className="text-xs text-navy-500">
-            {showAll
-              ? `Showing all ${projects.length} projects`
-              : `Showing ${featuredProjects.length} of ${projects.length} projects`}
-          </p>
         </div>
       </div>
     </section>

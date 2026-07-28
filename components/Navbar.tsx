@@ -1,7 +1,10 @@
 import { profile } from '@/data/profile';
+import { SERVICE_LINES } from '@/data/projects';
 
 export function Navbar() {
   return (
+    // Height is `--header-h` in globals.css (5.75rem = h-16 row + nav row).
+    // Keep the two in sync: every anchor offset derives from that variable.
     <header className="fixed inset-x-0 top-0 z-50 border-b border-navy-200/70 bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 sm:px-8">
         <a
@@ -19,7 +22,9 @@ export function Navbar() {
             <span className="text-[14px] font-semibold tracking-tight text-navy-900">
               {profile.name}
             </span>
-            <span className="hidden text-[11px] font-medium text-navy-500 sm:block">
+            {/* `md:` not `sm:` — the title grew from 34 to 46 characters and no
+                test covers the 640–768px band. `truncate` is the backstop. */}
+            <span className="hidden max-w-[46ch] truncate text-[11px] font-medium text-navy-500 md:block">
               {profile.title}
             </span>
           </span>
@@ -39,6 +44,35 @@ export function Navbar() {
           </span>
         </div>
       </div>
+
+      {/* Service-line nav. The `overflow-x-auto` sits on the <nav> and the <ul>
+          inside is `w-max whitespace-nowrap`, so any horizontal scrolling
+          happens INSIDE the nav box and `document.documentElement.scrollWidth`
+          never grows. That is exactly what mobile.spec.ts measures, and
+          page-level horizontal overflow is a hard failure.
+
+          Byte-identical markup at every breakpoint — at 1440px all five labels
+          fit and no scroll occurs. No hamburger, no JS, no focus trap.
+
+          `[scrollbar-width:none]` only. `-ms-overflow-style` is deliberately
+          omitted: IE10 / Edge Legacy, both EOL. */}
+      <nav
+        aria-label="Service lines"
+        className="mx-auto max-w-[1180px] overflow-x-auto px-5 pb-2 sm:px-8 [scrollbar-width:none]"
+      >
+        <ul className="flex w-max gap-x-5 whitespace-nowrap text-sm">
+          {SERVICE_LINES.map((line) => (
+            <li key={line.id}>
+              <a
+                href={`#${line.sectionId}`}
+                className="rounded font-medium text-navy-600 transition hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                {line.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }

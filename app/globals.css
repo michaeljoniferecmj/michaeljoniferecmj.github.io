@@ -7,6 +7,12 @@
     --color-canvas: 250 250 250;
     --color-navy: 15 23 42;
     --color-accent: 99 102 241;
+
+    /* Fixed-header height, measured — NOT guessed.
+       92px = row 1 `h-16` (64px) + row 2 nav strip (20px line-height + 8px pb-2).
+       Keep in sync with Navbar.tsx if either row changes; every anchor offset
+       derives from this one value. */
+    --header-h: 5.75rem;
   }
 
   html {
@@ -16,9 +22,19 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Account for the fixed navbar height when jumping to anchors. */
+  /* Account for the fixed navbar height when jumping to anchors.
+     Derived from --header-h so the offset can never drift from the header.
+     `toBeInViewport()` ignores fixed-header occlusion, so a wrong offset here
+     is a visual bug the Playwright suite provably cannot catch. */
   :target {
-    scroll-margin-top: 96px;
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
+  }
+
+  /* Headings are programmatically focused on fragment navigation (WCAG 2.4.3).
+     They carry tabindex="-1", so they must never render a persistent outline —
+     only the deliberate focus-visible ring specified on each heading. */
+  [id$='-heading']:focus {
+    outline: none;
   }
 
   body {

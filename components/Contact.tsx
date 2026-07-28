@@ -33,12 +33,17 @@ export function Contact() {
       aria-labelledby="contact-heading"
     >
       <div className="mx-auto max-w-[720px] px-5 text-center sm:px-8">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+        {/* accent-dark (6.29:1 on white), not accent (4.47:1). At 11px bold
+            this is below the large-text threshold, so 4.5:1 applies. */}
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Get In Touch
         </p>
         <h2
           id="contact-heading"
-          className="mt-2 text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl"
+          // Focus target for fragment navigation (WCAG 2.4.3) — applies to all
+          // nine section anchors, not only the new service-line ones.
+          tabIndex={-1}
+          className="mt-2 rounded text-3xl font-bold tracking-tight text-navy-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-white sm:text-4xl"
         >
           Let&apos;s work together
         </h2>
@@ -50,12 +55,22 @@ export function Contact() {
         <div className="mt-8 flex flex-col items-center gap-5">
           <a
             href={`mailto:${profile.email}`}
-            className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-accent-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            // White on `bg-accent` computes to 4.47:1 — a hairline AA FAILURE
+            // at 14px semibold, which is below the large-text threshold, so
+            // 4.5:1 applies. `bg-accent-dark` gives 6.29:1. Hover darkens via
+            // `brightness-90` (7.32:1) rather than a lighter accent, so the
+            // hover state never drops below the rest state; `filter` is in
+            // Tailwind's default `transition` property list, so it still eases.
+            className="inline-flex items-center gap-2 rounded-lg bg-accent-dark px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:brightness-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <MailIcon />
             {profile.email}
           </a>
 
+          {/* `hover:text-accent` KEPT on both social links. The link content is
+              an SVG glyph, not text, so 1.4.11 Non-text Contrast (3:1) applies
+              rather than 1.4.3 (4.5:1): accent-on-white is 4.47:1, and the
+              navy-600 rest state is 7.58:1. Both pass with room. */}
           <div className="flex items-center gap-2">
             <a
               href={profile.linkedin}
