@@ -74,6 +74,18 @@
       BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
       sans-serif;
 
+    /* Easing. The NAME is the curve shape, not the direction it is used for:
+       `ease-out` DECELERATES, so it is what an element ENTERS with.
+
+       These are deliberately stronger than the CSS built-ins, which are too
+       weak to read as intentional — an entrance on the stock curve looks like
+       it happened by accident. Applied to ENTRANCES only (`fade-in-up`,
+       `modal-in`). Hover and colour transitions keep Tailwind's default
+       in-out, which is the correct shape for a state change that has no
+       direction. Mirrors the `frontend-design` skill's motion tokens. */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
     /* Fixed-header height, measured — NOT guessed.
        96px = row 1 `h-16` (64px) + row 2 (24px: the nav strip and the Dev Mode
        switch share an `h-6` line, whichever is taller) + 8px `pb-2`.
@@ -329,6 +341,20 @@ html[data-mode='dev'] img {
   filter: saturate(0.92) brightness(0.94);
 }
 
+/* ───────────────────────────────────────────────────────────────────────
+   REDUCED MOTION
+
+   Reduced motion means fewer and gentler animations — NOT zero. The
+   previous version of this block set `animation-duration: 0.01ms` and
+   `transition-duration: 0.01ms` on `*`, which also destroyed the colour
+   and opacity transitions that carry meaning: hover feedback, focus
+   rings easing in, the press response on every button. Those aid
+   comprehension and cause no vestibular discomfort.
+
+   What actually needs removing is MOVEMENT — translation, scaling,
+   looping motion. So this block kills those specifically and leaves
+   colour/opacity alone.
+   ─────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -337,9 +363,40 @@ html[data-mode='dev'] img {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    /* Looping decorative motion stops after one cycle and parks visible. */
+    animation-iteration-count: 1 !important;
+    /* Keyframed entrances collapse to instant; their job is decorative. */
+    animation-duration: 0.01ms !important;
+  }
+
+  /* Transitions are NOT globally zeroed. Instead, transform is dropped
+     from the transition property list so position/scale changes land
+     instantly while colour, opacity, border and shadow still ease.
+     `transition-property` is what Tailwind's `transition` utility sets,
+     so overriding it here is enough to cover the whole site. */
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke, opacity, box-shadow, filter,
+      backdrop-filter !important;
+  }
+
+  /* Movement hovers and the press response are removed outright rather
+     than made instant — an instant jump is the jarring thing this media
+     query exists to prevent. */
+  .fine-pointer\:hover\:-translate-y-0\.5:hover,
+  [class*='active\:scale']:active,
+  .fine-pointer\:group-hover\:translate-x-1,
+  .fine-pointer\:group-hover\/link\:translate-x-1 {
+    transform: none !important;
+  }
+
+  /* The Dev Mode caret stops blinking but stays visible — it is a cursor,
+     and a cursor that has vanished reads as a rendering bug. */
+  html[data-mode='dev'] #hero-heading::after {
+    animation: none !important;
+    opacity: 1;
   }
 }

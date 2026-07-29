@@ -158,11 +158,28 @@ const config: Config = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        /** Modal panel. Never from `scale(0)` — nothing appears from nothing. */
+        'modal-in': {
+          '0%': { opacity: '0', transform: 'scale(0.97)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        'backdrop-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
-        'fade-in-up': 'fade-in-up 0.4s ease-out both',
+        /**
+         * 220ms, not the 400ms this shipped with: UI motion stays under
+         * 300ms, and this fires on a list expand — squarely UI. Paired with
+         * a 45ms per-card stagger in ProjectLineSection.
+         */
+        'fade-in-up': 'fade-in-up 0.22s var(--ease-out) both',
         'soft-pulse': 'soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'shot-in': 'shot-in 0.18s ease-out both',
+        /* Modals sit in the "occasional" tier — 200-500ms is the band. */
+        'modal-in': 'modal-in 0.2s var(--ease-out) both',
+        'backdrop-in': 'backdrop-in 0.2s ease-out both',
       },
     },
   },

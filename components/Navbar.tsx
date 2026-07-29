@@ -36,10 +36,15 @@ export function Navbar() {
           role="status"
           aria-label="Availability status: available for hire"
         >
-          <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
+          {/* A static dot, deliberately. This badge sits in a FIXED header, so
+              an infinite `animate-ping` here is on screen for 100% of every
+              session — the most-seen motion on the site, spent on a claim that
+              never changes. The hero carries the animated version, where it is
+              seen once on arrival and earns the attention. */}
+          <span
+            aria-hidden="true"
+            className="inline-flex h-2 w-2 rounded-full bg-emerald-500"
+          />
           <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-emerald-700">
             Available for Hire
           </span>

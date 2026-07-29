@@ -31,12 +31,12 @@ export function ProjectModal({ project, onClose }: Props) {
     <div
       ref={overlayRef}
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex animate-backdrop-in items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={`${project.title} details`}
     >
-      <div className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-surface shadow-2xl">
+      <div className="relative flex max-h-[90vh] w-full max-w-4xl animate-modal-in flex-col overflow-hidden rounded-2xl bg-surface shadow-2xl">
 
         {/* Header */}
         <div className="flex items-start justify-between border-b border-slate-100 px-7 py-5">

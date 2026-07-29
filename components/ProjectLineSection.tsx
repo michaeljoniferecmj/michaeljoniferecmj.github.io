@@ -169,6 +169,17 @@ export function ProjectLineSection({ line }: Props) {
               ]
                 .filter(Boolean)
                 .join(' ')}
+              // Stagger the reveal 45ms per card rather than firing all of
+              // them at once. Expanding Automation uncovers seven cards
+              // simultaneously, which reads as one flash rather than a list
+              // arriving. Capped at 6 steps (270ms) so a long line never
+              // makes the last card feel late, and applied inline because the
+              // delay is a function of position, not a fixed utility.
+              style={
+                expanded && index >= DEFAULT_VISIBLE_PER_LINE
+                  ? { animationDelay: `${Math.min(index - DEFAULT_VISIBLE_PER_LINE, 6) * 45}ms` }
+                  : undefined
+              }
             >
               {(isAnchor || otherLines.length > 0) && (
                 <div className="mb-3 flex flex-wrap items-center gap-2">

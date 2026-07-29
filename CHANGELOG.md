@@ -8,6 +8,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > This is the first release recorded under this format. Work predating it is
 > not retroactively documented.
 
+## [1.2.1] - 2026-07-30
+
+Motion-layer pass. The whole release came out of one review against the
+`review-animations` craft bar (vendored from
+[emilkowalski/skills](https://github.com/emilkowalski/skills)), which returned
+a **Block**. Two commits: unambiguous bugs first, judgment calls second.
+
+### Fixed
+
+- **`transition-all` on the carousel dot indicators.** `transition-property: all`
+  is unbounded — it animates every property later added to that element. Scoped
+  to `width,background-color`, 200ms ease-out. The `width` animation is a
+  documented exception to transform/opacity-only: a 6px dot inside an
+  absolutely-positioned overlay, whose layout pass touches nothing else.
+- **The screenshot crossfade never existed.** The `<img>` carried
+  `transition-opacity duration-300` *and* `key={src}`, so React remounted the
+  element on every arrow click and the transition had no prior opacity to move
+  from. The code claimed a 300ms crossfade; users saw a hard cut, and no test
+  could catch it because the class was present and the image did change.
+  Replaced with an 180ms `animate-shot-in` entry fade — an animation rather
+  than a transition precisely *because* the element remounts.
+- **No press feedback anywhere** — 0 `:active` rules in the compiled CSS. Every
+  pressable element was inert under the finger. Added `active:scale-*` sized to
+  the hit area across buttons, links, arrows, and the Dev Mode toggle.
+- **Ungated hover motion** — 0 `(hover: hover)` queries site-wide. Touch fires
+  `:hover` on tap and leaves it applied, so tapping a project card on a phone
+  lifted it and left it lifted. Added a `fine-pointer:` variant gating the
+  three movement hovers. Deliberately *not* applied to
+  `group-hover:opacity-100` on the carousel arrows — that same false hover is
+  what reveals them on touch.
+- **Reduced motion was zeroing everything.** `animation-duration: 0.01ms` and
+  `transition-duration: 0.01ms` on `*` also destroyed colour and opacity
+  transitions, which aid comprehension and cause no vestibular discomfort. Now
+  `transform` is dropped from the transition property list while colour,
+  opacity, border and shadow still ease at full duration; movement hovers and
+  the press response are removed outright rather than made instant.
+
+### Changed
+
+- **Modals now animate in.** Backdrop fades 200ms; panel `scale(0.97) → 1` plus
+  opacity, 200ms. Previously both appeared instantly — the one surface in the
+  "occasional" tier that clearly warrants motion had none. From 0.97, never
+  `scale(0)`.
+- **`fade-in-up` 400ms → 220ms, with a 45ms per-card stagger** capped at 6
+  steps. Expanding Automation revealed seven cards simultaneously, which read
+  as one flash rather than a list arriving.
+- **The infinite `animate-ping` is gone from the fixed header.** It was on
+  screen for 100% of every session — the most-seen motion on the site — for a
+  claim that never changes. The hero keeps the animated version, seen once on
+  arrival. The header dot is now static.
+- **Added `--ease-out: cubic-bezier(0.23, 1, 0.32, 1)`** and `--ease-in-out`,
+  applied to entrances only. Hover and colour transitions keep the default
+  in-out, which is the right shape for a state change with no direction.
+
 ## [1.2.0] - 2026-07-29
 
 ### Added
