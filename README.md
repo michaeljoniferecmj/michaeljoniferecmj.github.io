@@ -254,10 +254,23 @@ Two live targets are served from this one repo:
     immediate fix isn't ready, re-run the workflow via `workflow_dispatch`
     against a known-good prior commit instead of leaving the broken build
     live.
-- **Vercel** — deployed manually from a local checkout with
-  `vercel --prod --yes`. It is not wired into CI: there is no Vercel
-  workflow step in `.github/workflows/`, and `.vercel/project.json` only
-  links the local checkout to a Vercel project (`portfolio-site`) — it does
-  not trigger deploys on push.
-  - **Rollback:** use `vercel rollback` to revert to the previous production
-    deployment, or promote an earlier deployment from the Vercel dashboard.
+- **Vercel** — **deploys automatically on push to `main`** via Vercel's own
+  Git integration. There is no Vercel step in `.github/workflows/`; the
+  integration is configured on the Vercel side, so it is invisible from this
+  repo.
+  - **Verified 2026-07-29:** commit `cbf15e9` was pushed at 00:36:06 UTC and
+    `portfolio-site-psi-bay.vercel.app` reported `last-modified: 00:37:42` —
+    96 seconds later, with no local `vercel` command run.
+  - **This corrects earlier documentation in this file**, which said Vercel
+    was manual-only and that `vercel --prod --yes` was required after every
+    push. That was true when written (production deploys were observed 21
+    hours and 19 days behind `main`) and is no longer true. **One push now
+    deploys both targets.** `vercel --prod --yes` from a local checkout still
+    works and is the fallback if the integration is ever disconnected.
+  - **Rollback:** `git revert` + push now fixes **both** targets, not just
+    Pages. To move faster than a rebuild, use `vercel rollback` or promote an
+    earlier deployment from the Vercel dashboard.
+  - **Re-verify this before relying on it.** It is a setting on a service
+    outside this repo and can be switched off without leaving a trace here.
+    The cheap check is the one above: push, then read `last-modified` from
+    the Vercel URL.
