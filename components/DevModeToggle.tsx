@@ -72,7 +72,7 @@ export function DevModeToggle() {
       aria-pressed={dev}
       data-testid="dev-mode-toggle"
       title="Switch between the standard view and a developer-console skin"
-      className="inline-flex h-6 flex-shrink-0 items-center gap-1.5 rounded-full border border-navy-200 bg-surface px-2 text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-navy-600 transition hover:border-navy-300 hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface aria-pressed:border-accent-200 aria-pressed:bg-accent-50 aria-pressed:text-accent-dark sm:px-2.5"
+      className="inline-flex h-6 flex-shrink-0 items-center gap-1.5 rounded-full border border-navy-200 bg-surface px-2 text-[10px] font-bold uppercase leading-none tracking-[0.12em] text-navy-600 transition active:scale-95 hover:border-navy-300 hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface aria-pressed:border-accent-200 aria-pressed:bg-accent-50 aria-pressed:text-accent-dark sm:px-2.5"
     >
       <CodeIcon />
       {/* Hidden, not removed, below `sm`: the nav strip beside it is a scroll

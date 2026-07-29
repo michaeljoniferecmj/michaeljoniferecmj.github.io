@@ -133,7 +133,7 @@ export function Hero() {
         <ul className="mt-8 flex flex-wrap gap-2.5">
           {SERVICE_LINES.map((line) => (
             <li key={line.id}>
-              <span className="inline-flex items-center gap-2 rounded-full border border-navy-200 bg-surface px-3.5 py-2 text-[13px] font-medium text-navy-700 shadow-sm transition hover:border-navy-300 hover:shadow">
+              <span className="inline-flex items-center gap-2 rounded-full border border-navy-200 bg-surface px-3.5 py-2 text-[13px] font-medium text-navy-700 shadow-sm transition fine-pointer:hover:border-navy-300 fine-pointer:hover:shadow">
                 <span className="text-navy-500">{SPECIALTY_ICONS[line.id]}</span>
                 {line.label}
               </span>

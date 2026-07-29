@@ -61,7 +61,7 @@ export function Contact() {
             // `brightness-90` (7.32:1) rather than a lighter accent, so the
             // hover state never drops below the rest state; `filter` is in
             // Tailwind's default `transition` property list, so it still eases.
-            className="inline-flex items-center gap-2 rounded-lg bg-accent-dark px-5 py-3 text-sm font-semibold text-accent-on shadow-sm transition hover:brightness-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent-dark px-5 py-3 text-sm font-semibold text-accent-on shadow-sm transition active:scale-[0.97] hover:brightness-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             <MailIcon />
             {profile.email}
@@ -77,7 +77,7 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition active:scale-95 hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <LinkedInIcon />
             </a>
@@ -86,7 +86,7 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition active:scale-95 hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <GitHubIcon />
             </a>

@@ -33,7 +33,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
   return (
     <>
       <article
-        className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg md:grid-cols-5"
+        className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-surface shadow-sm transition fine-pointer:hover:-translate-y-0.5 fine-pointer:hover:shadow-lg md:grid-cols-5"
         data-testid={`project-card-${project.id}${instanceLine ? `-${instanceLine}` : ''}`}
       >
         {/* ── Preview panel ──
@@ -50,7 +50,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
               key={shots[activeIndex]}
               src={shots[activeIndex]}
               alt={`${project.title} screenshot ${activeIndex + 1}`}
-              className="absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-300"
+              className="absolute inset-0 h-full w-full animate-shot-in object-cover object-top"
             />
           )}
 
@@ -70,7 +70,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
               <button
                 onClick={prev}
                 aria-label="Previous screenshot"
-                className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/75 focus:opacity-100"
+                className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-0 transition active:scale-90 group-hover:opacity-100 hover:bg-black/75 focus:opacity-100"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                   <polyline points="15 18 9 12 15 6" />
@@ -79,7 +79,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
               <button
                 onClick={next}
                 aria-label="Next screenshot"
-                className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/75 focus:opacity-100"
+                className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-0 transition active:scale-90 group-hover:opacity-100 hover:bg-black/75 focus:opacity-100"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                   <polyline points="9 18 15 12 9 6" />
@@ -93,7 +93,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
                     key={i}
                     onClick={(e) => { e.stopPropagation(); setActiveIndex(i); }}
                     aria-label={`Screenshot ${i + 1}`}
-                    className={`h-1.5 rounded-full transition-all ${i === activeIndex ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
+                    className={`h-1.5 rounded-full transition-[width,background-color] duration-200 ease-out ${i === activeIndex ? 'w-4 bg-white' : 'w-1.5 bg-white/50'}`}
                   />
                 ))}
               </div>
@@ -125,10 +125,10 @@ export function ProjectCard({ project, instanceLine }: Props) {
           <div className="mt-auto flex flex-col gap-4 pt-2">
             <button
               onClick={() => setModalOpen(true)}
-              className="group/link inline-flex items-center gap-1.5 self-start rounded text-sm font-semibold text-indigo-600 transition hover:text-indigo-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              className="group/link inline-flex items-center gap-1.5 self-start rounded text-sm font-semibold text-indigo-600 transition active:scale-[0.97] hover:text-indigo-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
             >
               View Project Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-4 w-4 transition-transform group-hover/link:translate-x-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-4 w-4 transition-transform fine-pointer:group-hover/link:translate-x-1">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>

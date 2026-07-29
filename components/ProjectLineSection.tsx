@@ -25,7 +25,7 @@ function ArrowRight() {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
-      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+      className="h-4 w-4 transition-transform fine-pointer:group-hover:translate-x-1"
     >
       <line x1="5" y1="12" x2="19" y2="12" />
       <polyline points="12 5 19 12 12 19" />
@@ -82,7 +82,7 @@ function ExpandControl({ expanded, total, label, controlsId, onToggle }: ExpandC
       onClick={onToggle}
       aria-expanded={expanded}
       aria-controls={controlsId}
-      className="group inline-flex items-center gap-2 rounded text-sm font-semibold text-accent-dark transition hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+      className="group inline-flex items-center gap-2 rounded text-sm font-semibold text-accent-dark transition active:scale-[0.97] hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
     >
       {expanded ? (
         <>Show fewer {label} projects <ChevronUp /></>

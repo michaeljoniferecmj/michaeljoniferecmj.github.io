@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 /**
  * Every palette below resolves through a CSS custom property rather than a
@@ -146,14 +147,43 @@ const config: Config = {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },
           '50%': { opacity: '0.6', transform: 'scale(0.85)' },
         },
+        /**
+         * Entry fade for a swapped carousel screenshot. It is an ANIMATION and
+         * not a transition on purpose: the <img> carries `key={src}`, so React
+         * unmounts and remounts it on every swap. A transition has no prior
+         * opacity to move from and silently does nothing — which is exactly
+         * the bug this replaced.
+         */
+        'shot-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.4s ease-out both',
         'soft-pulse': 'soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'shot-in': 'shot-in 0.18s ease-out both',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addVariant }) => {
+      /**
+       * `fine-pointer:` — gates a utility behind a real hovering pointer.
+       *
+       * Touch devices fire a :hover on tap and then LEAVE it applied until the
+       * next tap elsewhere. Any hover that moves an element therefore sticks:
+       * tap a project card on a phone and it lifts and stays lifted. Wrap
+       * movement hovers in this variant; it stacks, so `fine-pointer:hover:…`
+       * and `fine-pointer:group-hover:…` both work.
+       *
+       * Deliberately NOT applied to `group-hover:opacity-100` on the carousel
+       * arrows. That false hover is load-bearing on touch — it is what reveals
+       * the arrows at all. Gating it would hide them on phones.
+       */
+      addVariant('fine-pointer', '@media (hover: hover) and (pointer: fine)');
+    }),
+  ],
 };
 
 export default config;
