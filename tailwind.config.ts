@@ -1,5 +1,26 @@
 import type { Config } from 'tailwindcss';
 
+/**
+ * Every palette below resolves through a CSS custom property rather than a
+ * literal hex. That indirection is the whole mechanism behind Dev Mode: the
+ * `data-mode="dev"` attribute on <html> swaps one block of variables in
+ * globals.css and the entire interface re-skins, with zero per-component
+ * conditional classes to keep in sync.
+ *
+ * The DEFAULT (light) values are byte-identical to what shipped in v1.1.0 —
+ * including the three documented AA contrast fixes — so the default view is
+ * unchanged. See globals.css for the two variable blocks.
+ *
+ * `<alpha-value>` is required for Tailwind's slash-opacity syntax
+ * (`bg-surface/85`, `border-navy-200/70`) to keep working through the variable.
+ *
+ * TOKENS THAT ARE NOT VARIABLES, AND WHY:
+ *   white / black — used only as ink on dark chrome (carousel arrows, the
+ *     watermark, the dot indicators sitting on a screenshot). Those surfaces are
+ *     dark in BOTH modes, so inverting `white` would have made them vanish.
+ *   shot          — the screenshot backdrop in the modal. Deliberately dark in
+ *     both modes; a light letterbox around a product shot reads as a bug.
+ */
 const config: Config = {
   content: [
     './app/**/*.{ts,tsx}',
@@ -10,28 +31,89 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#0f172a',
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+          DEFAULT: 'rgb(var(--c-navy-900) / <alpha-value>)',
+          50: 'rgb(var(--c-navy-50) / <alpha-value>)',
+          100: 'rgb(var(--c-navy-100) / <alpha-value>)',
+          200: 'rgb(var(--c-navy-200) / <alpha-value>)',
+          300: 'rgb(var(--c-navy-300) / <alpha-value>)',
+          400: 'rgb(var(--c-navy-400) / <alpha-value>)',
+          500: 'rgb(var(--c-navy-500) / <alpha-value>)',
+          600: 'rgb(var(--c-navy-600) / <alpha-value>)',
+          700: 'rgb(var(--c-navy-700) / <alpha-value>)',
+          800: 'rgb(var(--c-navy-800) / <alpha-value>)',
+          900: 'rgb(var(--c-navy-900) / <alpha-value>)',
+          950: 'rgb(var(--c-navy-950) / <alpha-value>)',
+        },
+        slate: {
+          50: 'rgb(var(--c-slate-50) / <alpha-value>)',
+          100: 'rgb(var(--c-slate-100) / <alpha-value>)',
+          200: 'rgb(var(--c-slate-200) / <alpha-value>)',
+          300: 'rgb(var(--c-slate-300) / <alpha-value>)',
+          400: 'rgb(var(--c-slate-400) / <alpha-value>)',
+          500: 'rgb(var(--c-slate-500) / <alpha-value>)',
+          600: 'rgb(var(--c-slate-600) / <alpha-value>)',
+          700: 'rgb(var(--c-slate-700) / <alpha-value>)',
+          800: 'rgb(var(--c-slate-800) / <alpha-value>)',
+          900: 'rgb(var(--c-slate-900) / <alpha-value>)',
+          950: 'rgb(var(--c-slate-950) / <alpha-value>)',
+        },
+        indigo: {
+          50: 'rgb(var(--c-indigo-50) / <alpha-value>)',
+          100: 'rgb(var(--c-indigo-100) / <alpha-value>)',
+          200: 'rgb(var(--c-indigo-200) / <alpha-value>)',
+          300: 'rgb(var(--c-indigo-300) / <alpha-value>)',
+          400: 'rgb(var(--c-indigo-400) / <alpha-value>)',
+          500: 'rgb(var(--c-indigo-500) / <alpha-value>)',
+          600: 'rgb(var(--c-indigo-600) / <alpha-value>)',
+          700: 'rgb(var(--c-indigo-700) / <alpha-value>)',
+          800: 'rgb(var(--c-indigo-800) / <alpha-value>)',
+          900: 'rgb(var(--c-indigo-900) / <alpha-value>)',
+        },
+        emerald: {
+          50: 'rgb(var(--c-emerald-50) / <alpha-value>)',
+          100: 'rgb(var(--c-emerald-100) / <alpha-value>)',
+          200: 'rgb(var(--c-emerald-200) / <alpha-value>)',
+          300: 'rgb(var(--c-emerald-300) / <alpha-value>)',
+          400: 'rgb(var(--c-emerald-400) / <alpha-value>)',
+          500: 'rgb(var(--c-emerald-500) / <alpha-value>)',
+          600: 'rgb(var(--c-emerald-600) / <alpha-value>)',
+          700: 'rgb(var(--c-emerald-700) / <alpha-value>)',
+          800: 'rgb(var(--c-emerald-800) / <alpha-value>)',
+          900: 'rgb(var(--c-emerald-900) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: '#6366f1',
-          light: '#818cf8',
-          dark: '#4f46e5',
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
+          DEFAULT: 'rgb(var(--c-accent) / <alpha-value>)',
+          light: 'rgb(var(--c-accent-light) / <alpha-value>)',
+          dark: 'rgb(var(--c-accent-dark) / <alpha-value>)',
+          50: 'rgb(var(--c-accent-50) / <alpha-value>)',
+          100: 'rgb(var(--c-accent-100) / <alpha-value>)',
+          200: 'rgb(var(--c-accent-200) / <alpha-value>)',
+          /**
+           * Ink for text sitting ON a filled accent/indigo button. It was
+           * `text-white`, which only worked while every filled button had a
+           * dark fill. In Dev Mode the fill is bright terminal green, so the
+           * ink has to flip with it or the mailto CTA drops to ~1.3:1.
+           */
+          on: 'rgb(var(--c-accent-on) / <alpha-value>)',
         },
-        canvas: '#fafafa',
+        canvas: 'rgb(var(--c-canvas) / <alpha-value>)',
+        /**
+         * Panel background. Was `bg-white` everywhere, which is genuinely
+         * dual-use in this codebase: nine "card surface" uses that must invert,
+         * and the carousel dot indicators that must stay white on top of a
+         * screenshot. Splitting the two is what makes the swap safe.
+         */
+        surface: 'rgb(var(--c-surface) / <alpha-value>)',
+        /** Inverted chip (the `>_` logo mark, the skip link). */
+        chip: {
+          DEFAULT: 'rgb(var(--c-chip) / <alpha-value>)',
+          ink: 'rgb(var(--c-chip-ink) / <alpha-value>)',
+        },
+        /** Screenshot letterbox — intentionally mode-independent. */
+        shot: {
+          DEFAULT: '#020617',
+          strip: '#0f172a',
+        },
       },
       fontFamily: {
         sans: [

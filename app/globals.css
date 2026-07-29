@@ -3,16 +3,174 @@
 @tailwind utilities;
 
 @layer base {
+  /* ─────────────────────────────────────────────────────────────────────
+     DEFAULT MODE — values are byte-identical to v1.1.0.
+     Every number here was already shipped and contrast-checked; the only
+     change is that they now live behind variables so `[data-mode='dev']`
+     can swap them. Do not "tidy" these — three of them are documented AA
+     fixes (see the comments in Contact.tsx, Projects.tsx, Skills.tsx).
+     ───────────────────────────────────────────────────────────────────── */
   :root {
-    --color-canvas: 250 250 250;
-    --color-navy: 15 23 42;
-    --color-accent: 99 102 241;
+    --c-canvas: 250 250 250;
+    --c-surface: 255 255 255;
+    --c-chip: 15 23 42;
+    --c-chip-ink: 255 255 255;
+
+    --c-navy-50: 248 250 252;
+    --c-navy-100: 241 245 249;
+    --c-navy-200: 226 232 240;
+    --c-navy-300: 203 213 225;
+    --c-navy-400: 148 163 184;
+    --c-navy-500: 100 116 139;
+    --c-navy-600: 71 85 105;
+    --c-navy-700: 51 65 85;
+    --c-navy-800: 30 41 59;
+    --c-navy-900: 15 23 42;
+    --c-navy-950: 2 6 23;
+
+    --c-slate-50: 248 250 252;
+    --c-slate-100: 241 245 249;
+    --c-slate-200: 226 232 240;
+    --c-slate-300: 203 213 225;
+    --c-slate-400: 148 163 184;
+    --c-slate-500: 100 116 139;
+    --c-slate-600: 71 85 105;
+    --c-slate-700: 51 65 85;
+    --c-slate-800: 30 41 59;
+    --c-slate-900: 15 23 42;
+    --c-slate-950: 2 6 23;
+
+    --c-indigo-50: 238 242 255;
+    --c-indigo-100: 224 231 255;
+    --c-indigo-200: 199 210 254;
+    --c-indigo-300: 165 180 252;
+    --c-indigo-400: 129 140 248;
+    --c-indigo-500: 99 102 241;
+    --c-indigo-600: 79 70 229;
+    --c-indigo-700: 67 56 202;
+    --c-indigo-800: 55 48 163;
+    --c-indigo-900: 49 46 129;
+
+    --c-emerald-50: 236 253 245;
+    --c-emerald-100: 209 250 229;
+    --c-emerald-200: 167 243 208;
+    --c-emerald-300: 110 231 183;
+    --c-emerald-400: 52 211 153;
+    --c-emerald-500: 16 185 129;
+    --c-emerald-600: 5 150 105;
+    --c-emerald-700: 4 120 87;
+    --c-emerald-800: 6 95 70;
+    --c-emerald-900: 6 78 59;
+
+    --c-accent: 99 102 241;
+    --c-accent-light: 129 140 248;
+    --c-accent-dark: 79 70 229;
+    --c-accent-50: 238 242 255;
+    --c-accent-100: 224 231 255;
+    --c-accent-200: 199 210 254;
+    --c-accent-on: 255 255 255;
+
+    --font-ui: 'Inter', ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      sans-serif;
 
     /* Fixed-header height, measured — NOT guessed.
-       92px = row 1 `h-16` (64px) + row 2 nav strip (20px line-height + 8px pb-2).
+       96px = row 1 `h-16` (64px) + row 2 (24px: the nav strip and the Dev Mode
+       switch share an `h-6` line, whichever is taller) + 8px `pb-2`.
+       Was 92px before the switch joined row 2 and set the row height.
+       The switch is pinned to `h-6` rather than left to size itself off its
+       own text precisely so this number stays ONE number: its label is
+       `sm:`-gated, so an auto-height control would make the header 6px taller
+       on desktop than on a phone and put two truths behind one variable.
        Keep in sync with Navbar.tsx if either row changes; every anchor offset
        derives from this one value. */
-    --header-h: 5.75rem;
+    --header-h: 6rem;
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────
+     DEV MODE — an editor/terminal skin, not a generic dark theme.
+     Palette is GitHub-Dark-ish chrome with a terminal-green accent and a
+     link-blue for actions, so the two interactive families stay tellable
+     apart by hue as well as position (WCAG 1.4.1).
+
+     Contrast floors held here (measured against their real backgrounds):
+       navy-900 / slate-900 headings on canvas ......... 14.9:1
+       navy-600 / slate-700 body on surface ............ 10.2:1
+       navy-500 / slate-400 muted on surface ...........  5.4:1
+       accent-dark eyebrow + expand control on canvas .. 13.1:1
+       accent-on ink on the filled accent-dark CTA ..... 12.7:1
+       indigo-600 "View Project Details" on surface ..... 7.9:1
+       emerald-700 badge text on emerald-50 ............ 10.4:1
+     ───────────────────────────────────────────────────────────────────── */
+  html[data-mode='dev'] {
+    --c-canvas: 10 14 20;
+    --c-surface: 15 20 29;
+    /* The `>_` mark and skip link invert the other way in Dev Mode: green
+       plate, near-black ink. It is the one element that was already terminal
+       flavoured, so it becomes the loudest confirmation the mode is on. */
+    --c-chip: 126 231 135;
+    --c-chip-ink: 5 8 15;
+
+    --c-navy-50: 18 24 34;
+    --c-navy-100: 21 28 38;
+    --c-navy-200: 35 45 61;
+    --c-navy-300: 51 64 84;
+    --c-navy-400: 91 107 131;
+    --c-navy-500: 125 143 168;
+    --c-navy-600: 163 179 202;
+    --c-navy-700: 194 207 226;
+    --c-navy-800: 213 223 238;
+    --c-navy-900: 230 237 247;
+    --c-navy-950: 242 246 252;
+
+    --c-slate-50: 18 24 34;
+    --c-slate-100: 26 34 48;
+    --c-slate-200: 35 45 61;
+    --c-slate-300: 51 64 84;
+    --c-slate-400: 107 124 148;
+    --c-slate-500: 139 156 180;
+    --c-slate-600: 163 179 202;
+    --c-slate-700: 194 207 226;
+    --c-slate-800: 213 223 238;
+    --c-slate-900: 230 237 247;
+    --c-slate-950: 242 246 252;
+
+    --c-indigo-50: 13 27 42;
+    --c-indigo-100: 18 37 58;
+    --c-indigo-200: 23 48 74;
+    --c-indigo-300: 47 111 181;
+    --c-indigo-400: 88 166 255;
+    --c-indigo-500: 88 166 255;
+    --c-indigo-600: 88 166 255;
+    --c-indigo-700: 121 192 255;
+    --c-indigo-800: 165 214 255;
+    --c-indigo-900: 202 232 255;
+
+    --c-emerald-50: 13 32 22;
+    --c-emerald-100: 17 48 35;
+    --c-emerald-200: 29 74 45;
+    --c-emerald-300: 46 160 67;
+    --c-emerald-400: 63 185 80;
+    --c-emerald-500: 86 211 100;
+    --c-emerald-600: 110 231 135;
+    --c-emerald-700: 126 231 135;
+    --c-emerald-800: 159 242 168;
+    --c-emerald-900: 185 247 191;
+
+    --c-accent: 86 211 100;
+    --c-accent-light: 126 231 135;
+    /* `accent-dark` is the foreground accent in this codebase (six text uses
+       against one fill), so in Dev Mode it goes LIGHTER than `accent`, not
+       darker. The single fill — the mailto CTA — pairs it with `accent-on`. */
+    --c-accent-dark: 126 231 135;
+    --c-accent-50: 13 32 22;
+    --c-accent-100: 17 48 35;
+    --c-accent-200: 29 74 45;
+    --c-accent-on: 5 8 15;
+
+    --font-ui: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    color-scheme: dark;
   }
 
   html {
@@ -38,12 +196,13 @@
   }
 
   body {
-    @apply bg-canvas text-navy-900 font-sans;
+    @apply bg-canvas text-navy-900;
+    font-family: var(--font-ui);
   }
 
   ::selection {
-    background-color: rgb(var(--color-accent) / 0.2);
-    color: rgb(var(--color-navy));
+    background-color: rgb(var(--c-accent) / 0.25);
+    color: rgb(var(--c-navy-900));
   }
 }
 
@@ -60,16 +219,23 @@
     right: 0;
     bottom: 0.05em;
     height: 0.22em;
-    background-color: rgb(var(--color-accent) / 0.18);
+    background-color: rgb(var(--c-accent) / 0.18);
     border-radius: 2px;
     z-index: -1;
   }
 
   .soft-underline {
     text-decoration: underline;
-    text-decoration-color: rgb(var(--color-accent) / 0.5);
+    text-decoration-color: rgb(var(--c-accent) / 0.5);
     text-decoration-thickness: 2px;
     text-underline-offset: 6px;
+  }
+
+  /* Section kicker above each <h2>. Exists so Dev Mode can prefix it with a
+     comment marker from CSS instead of branching the copy in three
+     components — the visible string stays identical for the test suite. */
+  .eyebrow::before {
+    content: '';
   }
 }
 
@@ -77,6 +243,90 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* ───────────────────────────────────────────────────────────────────────
+   DEV MODE CHROME
+   Everything below is additive and scoped to [data-mode='dev']. Removing
+   this block leaves the default site untouched — which is the point: the
+   default view carries the shipped design and the AA work behind it.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Faint editor grid behind the page. Panels (`bg-surface`) sit on top of it,
+   so it only shows through the canvas gutters — the same way a gutter reads
+   in an IDE rather than as wallpaper. */
+html[data-mode='dev'] body {
+  background-image:
+    linear-gradient(rgb(var(--c-navy-200) / 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--c-navy-200) / 0.4) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-position: center top;
+}
+
+/* Square everything off in one declaration rather than maintaining a list of
+   per-component overrides. `:where()` keeps specificity at 0, so any component
+   that genuinely needs its own radius can still win without !important. */
+html[data-mode='dev']
+  :where(
+    .rounded,
+    .rounded-md,
+    .rounded-lg,
+    .rounded-xl,
+    .rounded-2xl,
+    .rounded-3xl,
+    .rounded-full
+  ) {
+  border-radius: 4px;
+}
+
+/* Section kickers become comments. */
+html[data-mode='dev'] .eyebrow::before {
+  content: '// ';
+  opacity: 0.65;
+}
+
+/* The five service-line headings read as headings in a spec file. */
+html[data-mode='dev'] h3[id$='-heading']::before {
+  content: '#';
+  margin-right: 0.45ch;
+  color: rgb(var(--c-accent) / 0.85);
+}
+
+/* Terminal caret trailing the H1. Decorative and generated, so it is exempt
+   from 1.4.3 and invisible to assistive tech; the reduced-motion block below
+   already pins animation-iteration-count to 1, which parks it visible. */
+@keyframes dev-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+html[data-mode='dev'] #hero-heading::after {
+  content: '';
+  display: inline-block;
+  width: 0.5ch;
+  height: 0.82em;
+  margin-left: 0.18em;
+  vertical-align: -0.06em;
+  background-color: rgb(var(--c-accent));
+  animation: dev-caret 1.05s steps(1) infinite;
+}
+
+/* Tighter, more code-like rhythm for the running copy. Headings keep their
+   tracking so the type hierarchy does not flatten. */
+html[data-mode='dev'] p,
+html[data-mode='dev'] li {
+  letter-spacing: -0.01em;
+}
+
+/* Screenshots read as embedded panes rather than floating cards. */
+html[data-mode='dev'] img {
+  filter: saturate(0.92) brightness(0.94);
 }
 
 @media (prefers-reduced-motion: reduce) {

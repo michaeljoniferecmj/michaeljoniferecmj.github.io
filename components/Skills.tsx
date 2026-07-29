@@ -118,7 +118,7 @@ export function Skills() {
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
         {/* accent-dark (6.02:1 on canvas), not accent (4.28:1). At 11px bold
             this is below the large-text threshold, so 4.5:1 applies. */}
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
+        <p className="eyebrow text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Expertise
         </p>
         <h2
@@ -147,7 +147,7 @@ export function Skills() {
                   4.47:1 — a comfortable pass. It is also redundant with the
                   <h3> directly below it, so it is arguably decorative and
                   exempt outright. Not changed to match a string pattern. */}
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-accent shadow-sm">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-surface text-accent shadow-sm">
                 {category.icon}
               </span>
               <h3 className="mt-4 text-base font-semibold text-navy-900">

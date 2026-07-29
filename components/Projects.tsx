@@ -10,7 +10,7 @@ export function Projects() {
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
         {/* accent-dark (6.03:1), not accent (4.28:1 — fails AA at 11px bold). */}
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
+        <p className="eyebrow text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Selected Works
         </p>
         <h2

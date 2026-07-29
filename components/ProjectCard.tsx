@@ -33,7 +33,7 @@ export function ProjectCard({ project, instanceLine }: Props) {
   return (
     <>
       <article
-        className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg md:grid-cols-5"
+        className="group grid grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-surface shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg md:grid-cols-5"
         data-testid={`project-card-${project.id}${instanceLine ? `-${instanceLine}` : ''}`}
       >
         {/* ── Preview panel ──

@@ -193,6 +193,52 @@ portfolio site") — this is only the subset that changes how you should edit
   own `highlights` independently clears that line's classification
   criterion.
 
+## Theming and Dev Mode
+
+The site ships two skins from one set of components. There are **no
+conditional classes in any component** — the switch works entirely through CSS
+custom properties.
+
+**How it works.** Every colour in `tailwind.config.ts` resolves to
+`rgb(var(--c-*) / <alpha-value>)`. `app/globals.css` defines the values twice:
+once in `:root` (the default view) and once in `html[data-mode='dev']`. The
+toggle sets or removes `data-mode="dev"` on `<html>` and the whole interface
+re-skins. Chrome that is not a colour — monospace type, squared corners, the
+editor grid, the `//` kickers, the `#` heading prefixes, the caret — lives in
+the clearly marked `DEV MODE CHROME` block at the bottom of `globals.css`.
+
+**To change a colour, edit `globals.css`, not a component.** If you find
+yourself writing a `data-mode` selector inside a `.tsx` file, the token is
+missing — add it instead.
+
+**Four tokens are not simply inverted colours,** because one Tailwind colour
+was doing two incompatible jobs in each case. Use these rather than reaching
+for the underlying colour:
+
+| Token | Use it for | Do NOT use |
+|---|---|---|
+| `surface` | Card / panel backgrounds | `bg-white` — that stays white for the carousel dots, which sit on a screenshot |
+| `accent-on` | Ink on a filled accent or indigo button | `text-white` — the fill is bright in Dev Mode |
+| `chip` / `chip-ink` | The inverted `>_` plate, the skip link | `bg-navy-900` — that is also the heading text colour |
+| `shot` / `shot-strip` | The modal screenshot letterbox | `bg-slate-950` — that is also body text |
+
+**Two things Dev Mode must never do**, both pinned by
+`tests/e2e/dev-mode.spec.ts`:
+
+1. **Change content.** It is a stylesheet. The `//` and `#` markers are
+   `::before` pseudo-elements precisely so `textContent` stays byte-identical
+   and every copy-based assertion in the suite holds in both modes.
+2. **Flash.** The mode is restored by a blocking inline script in `<head>`
+   (`MODE_BOOTSTRAP` in `app/layout.tsx`), not by a `useEffect`. This is a
+   static export, so the HTML always ships in default mode — an effect would
+   repaint the entire page one frame in. The persistence test asserts the
+   attribute at `domcontentloaded`, which is what makes that regression
+   impossible to land quietly.
+
+The `localStorage` key is `portfolio-mode` (`'dev'` or `'default'`). It is
+duplicated between `DevModeToggle.tsx` and the inline bootstrap because the
+bootstrap is a string injected into `<head>` and cannot import — change both.
+
 ## Deploy and rollback
 
 Two live targets are served from this one repo:

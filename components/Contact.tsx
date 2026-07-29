@@ -29,13 +29,13 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="border-t border-navy-200 bg-white py-20 sm:py-24"
+      className="border-t border-navy-200 bg-surface py-20 sm:py-24"
       aria-labelledby="contact-heading"
     >
       <div className="mx-auto max-w-[720px] px-5 text-center sm:px-8">
         {/* accent-dark (6.29:1 on white), not accent (4.47:1). At 11px bold
             this is below the large-text threshold, so 4.5:1 applies. */}
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
+        <p className="eyebrow text-[11px] font-bold uppercase tracking-[0.18em] text-accent-dark">
           Get In Touch
         </p>
         <h2
@@ -43,7 +43,7 @@ export function Contact() {
           // Focus target for fragment navigation (WCAG 2.4.3) — applies to all
           // nine section anchors, not only the new service-line ones.
           tabIndex={-1}
-          className="mt-2 rounded text-3xl font-bold tracking-tight text-navy-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-white sm:text-4xl"
+          className="mt-2 rounded text-3xl font-bold tracking-tight text-navy-900 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-surface sm:text-4xl"
         >
           Let&apos;s work together
         </h2>
@@ -61,7 +61,7 @@ export function Contact() {
             // `brightness-90` (7.32:1) rather than a lighter accent, so the
             // hover state never drops below the rest state; `filter` is in
             // Tailwind's default `transition` property list, so it still eases.
-            className="inline-flex items-center gap-2 rounded-lg bg-accent-dark px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:brightness-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent-dark px-5 py-3 text-sm font-semibold text-accent-on shadow-sm transition hover:brightness-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             <MailIcon />
             {profile.email}
@@ -77,7 +77,7 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-white text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <LinkedInIcon />
             </a>
@@ -86,7 +86,7 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub profile"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-white text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-navy-200 bg-surface text-navy-600 transition hover:border-navy-300 hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <GitHubIcon />
             </a>

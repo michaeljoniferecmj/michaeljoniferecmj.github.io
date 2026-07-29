@@ -8,6 +8,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > This is the first release recorded under this format. Work predating it is
 > not retroactively documented.
 
+## [1.2.0] - 2026-07-29
+
+### Added
+
+- Added **Dev Mode**: a header toggle that re-skins the whole site as a
+  developer console — monospace type, squared panels, a faint editor grid,
+  `//` comment markers on section kickers, a `#` prefix on the five
+  service-line headings, and a blinking terminal caret after the H1. The `>_`
+  logo mark inverts to a green plate. The choice persists in `localStorage`
+  under the key `portfolio-mode` and is restored by a blocking inline script in
+  `<head>` **before first paint**, so returning visitors never see a white
+  flash. Default (light) mode is unchanged and remains what ships in the HTML.
+- Added `tests/e2e/dev-mode.spec.ts` (7 declarations, 13 runs): default-off,
+  press/re-press, persistence in both directions, the before-first-paint
+  guarantee asserted at `domcontentloaded` rather than after hydration,
+  content-parity between modes, and a mobile no-horizontal-overflow check.
+
+### Changed
+
+- **Colour tokens now resolve through CSS custom properties.**
+  `tailwind.config.ts` maps `navy`, `slate`, `indigo`, `emerald`, `accent` and
+  `canvas` to `rgb(var(--c-*) / <alpha-value>)`; the two value sets live in
+  `:root` and `html[data-mode='dev']` in `app/globals.css`. The default values
+  are byte-identical to 1.1.0, so no shipped colour changed — including the
+  three documented AA contrast fixes.
+- Added four semantic tokens for cases where one Tailwind colour was doing two
+  incompatible jobs and so could not simply be inverted:
+  - `surface` — panel background. Replaces `bg-white` on the nine card/panel
+    surfaces. `bg-white` is retained on the carousel dot indicators, which sit
+    on a screenshot and must stay white in both modes.
+  - `accent-on` — ink on a filled accent/indigo button. Replaces `text-white`
+    on the mailto CTA and the modal's "View Live Site" link.
+  - `chip` / `chip-ink` — the inverted `>_` logo plate and the skip link.
+    Replaces `bg-navy-900` + `text-white`, which collided with the twelve
+    `text-navy-900` body/heading uses.
+  - `shot` / `shot-strip` — the modal's screenshot letterbox and thumbnail
+    strip. Replaces `bg-slate-950` / `bg-slate-900`, which collided with
+    `text-slate-900`. Deliberately mode-independent.
+- Moved the service-line nav into a flex row that also holds the Dev Mode
+  switch, as a sibling of `<nav>` rather than a child — the nav is an
+  `overflow-x-auto` scroll container, and a control inside it scrolls out of
+  reach on a phone. Header row 1 is untouched: at 390px the name and the
+  availability badge each already wrap, and a third item there truncated the
+  name to "Michael E…".
+- `--header-h` 5.75rem → **6rem**. Row 2 is now 24px (the switch is pinned to
+  `h-6` so the height is identical at every breakpoint) plus the existing 8px
+  `pb-2`. Every `:target` anchor offset derives from this variable.
+- `ProjectModal`'s "View Live Site" hover changed from `hover:bg-indigo-700` to
+  `hover:brightness-110`. `indigo-700` is also the *text* colour on the tech
+  stack chips, so the two uses could not share one inverted value.
+
 ## [1.1.0] - 2026-07-28
 
 ### BREAKING CHANGES

@@ -1,20 +1,21 @@
 import { profile } from '@/data/profile';
 import { SERVICE_LINES } from '@/data/projects';
+import { DevModeToggle } from './DevModeToggle';
 
 export function Navbar() {
   return (
-    // Height is `--header-h` in globals.css (5.75rem = h-16 row + nav row).
-    // Keep the two in sync: every anchor offset derives from that variable.
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-navy-200/70 bg-white/85 backdrop-blur-md">
+    // Height is `--header-h` in globals.css. Keep the two in sync: every
+    // anchor offset derives from that variable.
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-navy-200/70 bg-surface/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-5 sm:px-8">
         <a
           href="#hero"
-          className="group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-lg"
+          className="group flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface rounded-lg"
           aria-label="Back to top"
         >
           <span
             aria-hidden="true"
-            className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 font-mono text-[13px] font-bold text-white shadow-sm"
+            className="flex h-9 w-9 items-center justify-center rounded-lg bg-chip font-mono text-[13px] font-bold text-chip-ink shadow-sm"
           >
             &gt;_
           </span>
@@ -45,34 +46,49 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Service-line nav. The `overflow-x-auto` sits on the <nav> and the <ul>
-          inside is `w-max whitespace-nowrap`, so any horizontal scrolling
-          happens INSIDE the nav box and `document.documentElement.scrollWidth`
-          never grows. That is exactly what mobile.spec.ts measures, and
-          page-level horizontal overflow is a hard failure.
+      {/* Row 2: service-line nav + the Dev Mode switch.
+          The switch lives HERE, not in row 1. Row 1 is already at capacity on
+          a phone — at 390px the name and the availability badge each wrap to
+          two lines — so a third item there truncates the name to "Michael E…".
+          It is also deliberately a SIBLING of the <nav>, not a child: the nav
+          is an overflow-x-auto scroll container, and a control parked inside
+          it scrolls out of reach on narrow viewports. */}
+      <div className="mx-auto flex max-w-[1180px] items-center gap-3 px-5 pb-2 sm:px-8">
+        {/* The `overflow-x-auto` sits on the <nav> and the <ul> inside is
+            `w-max whitespace-nowrap`, so any horizontal scrolling happens
+            INSIDE the nav box and `document.documentElement.scrollWidth` never
+            grows. That is exactly what mobile.spec.ts measures, and page-level
+            horizontal overflow is a hard failure.
 
-          Byte-identical markup at every breakpoint — at 1440px all five labels
-          fit and no scroll occurs. No hamburger, no JS, no focus trap.
+            `min-w-0` is what lets the flex item actually shrink below its
+            content width — without it the default `min-width: auto` would let
+            the nav push the page wide and defeat the containment above.
 
-          `[scrollbar-width:none]` only. `-ms-overflow-style` is deliberately
-          omitted: IE10 / Edge Legacy, both EOL. */}
-      <nav
-        aria-label="Service lines"
-        className="mx-auto max-w-[1180px] overflow-x-auto px-5 pb-2 sm:px-8 [scrollbar-width:none]"
-      >
-        <ul className="flex w-max gap-x-5 whitespace-nowrap text-sm">
-          {SERVICE_LINES.map((line) => (
-            <li key={line.id}>
-              <a
-                href={`#${line.sectionId}`}
-                className="rounded font-medium text-navy-600 transition hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-              >
-                {line.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+            Byte-identical markup at every breakpoint — at 1440px all five
+            labels fit and no scroll occurs. No hamburger, no JS, no focus trap.
+
+            `[scrollbar-width:none]` only. `-ms-overflow-style` is deliberately
+            omitted: IE10 / Edge Legacy, both EOL. */}
+        <nav
+          aria-label="Service lines"
+          className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none]"
+        >
+          <ul className="flex w-max gap-x-5 whitespace-nowrap text-sm">
+            {SERVICE_LINES.map((line) => (
+              <li key={line.id}>
+                <a
+                  href={`#${line.sectionId}`}
+                  className="rounded font-medium text-navy-600 transition hover:text-navy-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+                >
+                  {line.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <DevModeToggle />
+      </div>
     </header>
   );
 }
