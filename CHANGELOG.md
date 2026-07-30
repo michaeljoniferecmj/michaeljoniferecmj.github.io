@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > This is the first release recorded under this format. Work predating it is
 > not retroactively documented.
 
+## [1.2.2] - 2026-07-30
+
+### Added
+
+- Added six screenshots to the **Dennis Partners** SEO entry, captured from the
+  live site. It was the last entry in the SEO line rendering as a gradient with
+  a watermark instead of visual proof — on the anchor line for the service Michael
+  sells, which made the weaker of the two SEO cards weaker still.
+  Shots: home hero, service-areas index, the home services grid, two service
+  detail pages, and mobile home at 390px.
+  `03-service-areas` sits second, right after the hero, because those are the
+  exact pages the duplicate-title and missing-H1 remediation landed on — the
+  most-cited item in the entry's own highlights.
+  These show the **current** state, not a before/after: the engagement was
+  remediation on an existing site, and no pre-work capture exists.
+  Compressed to the project convention (≤200KB JPEG) — 1.1M for six, against
+  4.3M for HousePlan Group's six legacy PNGs.
+
 ## [1.2.1] - 2026-07-30
 
 Motion-layer pass. The whole release came out of one review against the

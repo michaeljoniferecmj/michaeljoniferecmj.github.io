@@ -358,6 +358,19 @@ export const projects: Project[] = [
     // it would pad Websites, which FR-03 forbids.
     lines: ['seo'],
     gradient: 'linear-gradient(135deg, #0f172a 0%, #475569 100%)',
+    // Captured from the live site 2026-07-30. This engagement was remediation on
+    // an EXISTING site, so these show the current state — the pages carrying the
+    // title/H1, schema and redirect work — not a before/after. `03-service-areas`
+    // leads after the hero because those are the exact pages the duplicate-title
+    // and missing-H1 fixes landed on, which is the most-cited item above.
+    screenshots: [
+      '/screenshots/dennis-partners/01-home-hero.jpg',
+      '/screenshots/dennis-partners/03-service-areas.jpg',
+      '/screenshots/dennis-partners/02-home-services.jpg',
+      '/screenshots/dennis-partners/04-residential-structural.jpg',
+      '/screenshots/dennis-partners/05-retaining-walls.jpg',
+      '/screenshots/dennis-partners/06-mobile-home.jpg',
+    ],
     liveUrl: 'https://dennispartners.com.au',
   },
   {
